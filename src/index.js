@@ -3,8 +3,8 @@
 const logger = require('./utils/logger');
 const process = require('process');
 
-// PORT 아규먼트가 전달이 않되어있을때는 8080 PORT를 default로 server run
-let serverListenPort = process.env.PORT || 8090;
+// PORT 아규먼트가 전달이 않되어있을때는 3000 PORT를 default로 server run
+let serverListenPort = process.env.PORT || 3000;
 
 let app = null;
 try {
