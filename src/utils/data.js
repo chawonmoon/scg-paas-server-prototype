@@ -198,7 +198,7 @@ for (
     let realtimePayInfo = {};
     realtimePayInfo.payKind = 1;
     realtimePayInfo.cardNo = '1234-****-****-4567';
-    realtimePayInfo.payDate = ' '
+    realtimePayInfo.payDate = '2018-01-01';
     data.realtimePayInfos.push(realtimePayInfo);
 }
 
