@@ -73,7 +73,7 @@ service.connect = function () {
 
 /*
 
-    findUserByLoginId: id로 사용자 찾기
+    queryInfo key 값 example : id로 사용자 찾기
 
 */
 

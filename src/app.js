@@ -1,17 +1,14 @@
 'use strict';
 
 const CONFIG = require('./config');
-// const path = require('path');
 const express = require('express');
 const app = express();
 const compress = require('compression');
 const bodyParser = require('body-parser');
-// const validator = require('express-validator');
-// const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const favicon = require('serve-favicon');
-// const authRoute = require('./routes/auth');
 const applicationRoute = require('./routes/application');
+const gasRoute = require('./routes/gas');
 const errorMiddleware = require('./middleware/error');
 const loggerMiddleware = require('./middleware/logger');
 const appInit = require('./init');
@@ -26,8 +23,8 @@ app.use(compress())
     .use(favicon(__dirname + '/../public/favicon.ico'));
 
 app.use(loggerMiddleware);
-// app.use(CONFIG.API_PREFIX_URL, authRoute);
 app.use(CONFIG.API_PREFIX_URL + '/application', applicationRoute);
+app.use(CONFIG.API_PREFIX_URL + '/gas', gasRoute);
 
 app.use(errorMiddleware.notFoundHandler)
     .use(errorMiddleware.errorLogger)
