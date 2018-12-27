@@ -1,7 +1,7 @@
 'use strict';
 
 const process = require('process');
-let databaseName = process.env.DB || 'mysql';
+let databaseName = process.env.DB || 'scgpaas';
 
 const config = {};
 
@@ -25,7 +25,7 @@ config.API_PREFIX_URL = '/api';
 // db connection info
 config.db = {
     host: '127.0.0.1',
-    user: 'root',
+    user: 'yamdeng',
     password: '1234',
     port: 3306,
     database: databaseName
