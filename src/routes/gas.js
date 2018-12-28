@@ -9,7 +9,7 @@ const data = require('../utils/data');
 router.get('/profile', function(req, res) {
     const result = {
         id: 17,
-        loginId: 'yamdeng',
+        loginId: 'yamdeng2',
         name: '안용성'
     };
     res.send(result);
