@@ -5,7 +5,21 @@ const express = require('express');
 const router = express.Router();
 const data = require('../utils/data');
 
-// /api/gas/profile : 프로필 ---> 랜덤한 값으로 전달
+/*
+
+     1.청구요금 조회
+     2.실시간 요금 계산
+     3.최근납부
+     4.주요 업무
+     5.사용계약번호 관리
+
+*/
+// /api/gas/homeInfos : 대략 3개정도 받아서 처리
+router.get('/homeInfos', function(req, res) {
+    res.send(data.homeInfos);
+});
+
+// /api/gas/profile : 프로필
 router.get('/profile', function(req, res) {
     const result = {
         id: 17,
@@ -15,7 +29,7 @@ router.get('/profile', function(req, res) {
     res.send(result);
 });
 
-// /api/gas/profile : 프로필 ---> 랜덤한 값으로 전달
+// /api/gas/safeHistory/:contractNo : 안전점검 이력조회
 router.get('/safeHistory/:contractNo', function(req, res) {
     const result = {
         safeHistory: data.safeHistory
@@ -79,20 +93,6 @@ router.get('/tariff/:tariffId', function(req, res) {
         return info.id === Number(req.params.tariffId);
     });
     res.send(result);
-});
-
-/*
-
-     1.청구요금 조회
-     2.실시간 요금 계산
-     3.최근납부
-     4.주요 업무
-     5.사용계약번호 관리
-
-*/
-// /api/gas/homeInfos : 대략 3개정도 받아서 처리
-router.get('/homeInfos', function(req, res) {
-    res.send(data.homeInfos);
 });
 
 module.exports = router;
