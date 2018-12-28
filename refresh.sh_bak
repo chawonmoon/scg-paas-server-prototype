@@ -1,0 +1,15 @@
+#!/bin/sh
+
+cd /home/ec2-user/Project/scg-paas-server-prototype
+echo $1
+git pull
+sleep 5 
+echo "1scg-paas-server-prototype start"
+pkill -9 -f scgserver
+echo "scgserver kill complete"
+# nohup node src/index.js --scgserver > /dev/null 2>&1 &
+/home/ec2-user/.nvm/versions/node/v10.15.0/bin/node src/index.js --scgserver
+echo "success start"
+sleep 1
+exit 0
+
