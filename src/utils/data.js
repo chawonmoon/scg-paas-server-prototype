@@ -6,6 +6,22 @@ const data = {};
 
 /*
 
+    안전점검 이력조회
+
+*/
+
+data.safeHistory = [];
+for (let safeHistoryIndex = 0; safeHistoryIndex < 10; safeHistoryIndex++) {
+    let safeHistoryInfo = {};
+    safeHistoryInfo.checkDate = '';
+    safeHistoryInfo.checkResult = safeHistoryIndex % 2 === 0 ? 1 : 2;
+    safeHistoryInfo.checkReason =
+        safeHistoryIndex % 2 === 0 ? null : '다시확인요망';
+    data.safeHistory.push(safeHistoryInfo);
+}
+
+/*
+
     2016 ~ 2018년까지 월 차트 데이터 가공
 
 */
@@ -18,10 +34,10 @@ for (let year = 2016; year <= 2018; year++) {
         let chartUnitInfo = {};
         chartUnitInfo.year = year;
         chartUnitInfo.month = month;
-        chartUnitInfo.date = year + '' + month >= 10 ? month : '0' + month;
+        chartUnitInfo.date = year + '' + (month >= 10 ? month : '0' + month);
         // 청구월
         chartUnitInfo.chargeMonth =
-            year + '' + month >= 10 ? month : '0' + month;
+            year + '' + (month >= 10 ? month : '0' + month);
         // 청구금액
         chartUnitInfo.chargeAmt = chartUnitInfo.chargeAmt = _.random(
             5000,
@@ -105,7 +121,7 @@ _.forEach(allMonthChartData, chartInfo => {
         compareUseChartInfo.beforeUseGas = _.random(0, 100);
         detailInfo.compareChartData.push(compareUseChartInfo);
     }
-
+    detailInfo.notice = '<div>안내문입니다</div>';
     monthDetailInfos.push(detailInfo);
 });
 
@@ -130,9 +146,9 @@ payOffUnitInfo1.date =
         : '0' + payOffUnitInfo1.month;
 // 청구월
 payOffUnitInfo1.chargeMonth =
-    payOffUnitInfo1.year + '' + payOffUnitInfo1.month >= 10
+    payOffUnitInfo1.year + '' + (payOffUnitInfo1.month >= 10
         ? payOffUnitInfo1.month
-        : '0' + payOffUnitInfo1.month;
+        : '0' + payOffUnitInfo1.month);
 // 청구금액
 payOffUnitInfo1.chargeAmt = payOffUnitInfo1.chargeAmt = _.random(5000, 50000);
 // 미납금액
@@ -149,14 +165,14 @@ let payOffUnitInfo2 = {};
 payOffUnitInfo2.year = 2018;
 payOffUnitInfo2.month = 11;
 payOffUnitInfo2.date =
-    payOffUnitInfo2.year + '' + payOffUnitInfo2.month >= 10
+    payOffUnitInfo2.year + '' + (payOffUnitInfo2.month >= 10
         ? payOffUnitInfo2.month
-        : '0' + payOffUnitInfo2.month;
+        : '0' + payOffUnitInfo2.month);
 // 청구월
 payOffUnitInfo2.chargeMonth =
-    payOffUnitInfo2.year + '' + payOffUnitInfo2.month >= 10
+    payOffUnitInfo2.year + '' + (payOffUnitInfo2.month >= 10
         ? payOffUnitInfo2.month
-        : '0' + payOffUnitInfo2.month;
+        : '0' + payOffUnitInfo2.month);
 // 청구금액
 payOffUnitInfo2.chargeAmt = payOffUnitInfo2.chargeAmt = _.random(5000, 50000);
 // 미납금액
@@ -199,7 +215,135 @@ for (
     realtimePayInfo.payKind = 1;
     realtimePayInfo.cardNo = '1234-****-****-4567';
     realtimePayInfo.payDate = '2018-01-01';
+    realtimePayInfo.totalPayAmt = 13990;
+    realtimePayInfo.contractKind = 2;
     data.realtimePayInfos.push(realtimePayInfo);
 }
+
+/*
+
+    가스 요금표(요약,상세)
+
+*/
+
+data.gasTariffSimpleInfos = [];
+data.gasTariffDetailInfos = [];
+
+for (let gasTariffIndex = 0; gasTariffIndex < 10; gasTariffIndex++) {
+    let gasTariffSimpleInfo = {
+        id: gasTariffIndex,
+        date: '2018-01-2' + gasTariffIndex,
+        content: '2018년 08월01일자 경기지역요금 단가표'
+    };
+    let gasTariffDetailInfo = {
+        id: gasTariffIndex,
+        date: '2018-01-2' + gasTariffIndex,
+        content: '2018년 08월01일자 경기지역요금 단가표 상세 정보입니다'
+    };
+    data.gasTariffSimpleInfos.push(gasTariffSimpleInfo);
+    data.gasTariffDetailInfos.push(gasTariffDetailInfo);
+}
+
+/*
+
+    홈 정보
+     1.청구요금 조회
+     2.실시간 요금 계산
+     3.최근납부
+     4.주요 업무
+     5.사용계약번호 관리
+
+*/
+
+/* 청구요금 조회 */
+
+data.homeInfos = [];
+let homeInfo1 = {};
+homeInfo1.homeType = 1;
+homeInfo1.homeSimpleContent = {};
+homeInfo1.homeSimpleContent.payDeadLine = '01월01일';
+homeInfo1.homeSimpleContent.labelUserName = '정*관';
+homeInfo1.homeSimpleContent.labelMonth = '1월';
+homeInfo1.homeSimpleContent.chargeAmt = 21250;
+homeInfo1.homeSimpleContent.recentMonthChartData = [];
+
+for (let month = 10; month <= 12; month++) {
+    let chartUnitInfo = {};
+    chartUnitInfo.year = 2018;
+    chartUnitInfo.month = month;
+    chartUnitInfo.date = 2018 + '' + (month >= 10 ? month : '0' + month);
+    // 청구월
+    chartUnitInfo.chargeMonth = 2018 + '' + (month >= 10 ? month : '0' + month);
+    // 청구금액
+    chartUnitInfo.chargeAmt = chartUnitInfo.chargeAmt = _.random(5000, 50000);
+    // 사용량
+    chartUnitInfo.useGas = _.random(0, 100);
+    homeInfo1.homeSimpleContent.recentMonthChartData.push(chartUnitInfo);
+}
+
+/* 실시간 요금 계산 */
+
+let homeInfo2 = {};
+homeInfo2.homeType = 2;
+homeInfo2.homeSimpleContent = {};
+homeInfo2.homeSimpleContent.beforeUseGas = 476;
+homeInfo2.homeSimpleContent.thisUseGas = 0;
+
+/* 최근 납부 */
+
+let homeInfo3 = {};
+homeInfo3.homeType = 3;
+homeInfo3.homeSimpleContent = {};
+homeInfo3.homeSimpleContent.labelUserName = '정*관';
+homeInfo3.homeSimpleContent.list = [];
+
+for (let month = 8; month <= 12; month++) {
+    let detailInfo = {};
+    detailInfo.year = 2018;
+    detailInfo.month = month;
+    detailInfo.date = 2018 + '' + (month >= 10 ? month : '0' + month);
+    // 청구월
+    detailInfo.chargeMonth = 2018 + '' + (month >= 10 ? month : '0' + month);
+    // 청구금액
+    detailInfo.chargeAmt = detailInfo.chargeAmt = _.random(5000, 50000);
+    // 사용량
+    detailInfo.useGas = _.random(0, 100);
+    // 납부정보
+    detailInfo.payKind = 1;
+    homeInfo3.homeSimpleContent.list.push(detailInfo);
+}
+
+/* 주요업무 */
+
+let homeInfo4 = {};
+homeInfo4.homeType = 4;
+homeInfo4.label = '모바일 고객센터 주요 업무';
+homeInfo4.homeSimpleContent = {};
+homeInfo4.homeSimpleContent.list = [
+    '가스요금',
+    '전기요금',
+    '간편 조회',
+    '실시간 요금계산',
+    '요금 납부',
+    '상담톡',
+    '방문예약',
+    '이사',
+    '가스관련 신고'
+];
+
+/* 주요업무 */
+
+let homeInfo5 = {};
+homeInfo5.homeType = 5;
+homeInfo5.label = '부모님 댁 가스 요금도 함께 조회 OK~';
+homeInfo5.homeSimpleContent = {};
+homeInfo5.homeSimpleContent.bodyContent =
+    '우리 집은 물론 가족들 집까지 손쉽게 관리할 수 있어요';
+
+data.homeInfos.push(homeInfo1);
+data.homeInfos.push(homeInfo2);
+data.homeInfos.push(homeInfo3);
+data.homeInfos.push(homeInfo4);
+data.homeInfos.push(homeInfo5);
 
 module.exports = data;
