@@ -11,11 +11,11 @@ var2=$(($var1+0))
 echo "var2 : $var2"
 if [ $var2 -gt 2 ]
       then
-	echo "1scg-paas-server-prototype start"
+	echo "scg-paas-server-prototype restart"
 	pkill -9 -f scgserver
 	echo "scgserver kill complete"
 	/home/ec2-user/.nvm/versions/node/v10.15.0/bin/node src/index.js --scgserver
-	echo "success start"
+	echo "success restart"
 	sleep 1
 fi
 echo "scg-shell exit"
