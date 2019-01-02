@@ -13,7 +13,7 @@ const data = {};
 data.safeHistory = [];
 for (let safeHistoryIndex = 0; safeHistoryIndex < 10; safeHistoryIndex++) {
     let safeHistoryInfo = {};
-    safeHistoryInfo.checkDate = '';
+    safeHistoryInfo.checkDate = '20181011';
     safeHistoryInfo.checkResult = safeHistoryIndex % 2 === 0 ? 1 : 2;
     safeHistoryInfo.checkReason =
         safeHistoryIndex % 2 === 0 ? null : '다시확인요망';
