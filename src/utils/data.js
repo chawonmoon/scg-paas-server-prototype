@@ -141,9 +141,9 @@ let payOffUnitInfo1 = {};
 payOffUnitInfo1.year = 2018;
 payOffUnitInfo1.month = 11;
 payOffUnitInfo1.date =
-    payOffUnitInfo1.year + '' + payOffUnitInfo1.month >= 10
+    payOffUnitInfo1.year + '' + (payOffUnitInfo1.month >= 10
         ? payOffUnitInfo1.month
-        : '0' + payOffUnitInfo1.month;
+        : '0' + payOffUnitInfo1.month);
 // 청구월
 payOffUnitInfo1.chargeMonth =
     payOffUnitInfo1.year + '' + (payOffUnitInfo1.month >= 10
