@@ -95,4 +95,12 @@ router.get('/tariff/:tariffId', function(req, res) {
     res.send(result);
 });
 
+// api/gas/appInfo : 앱 버전
+router.get('/appInfo', function(req, res) {
+    let result = {
+        version: 'v.2.5.1'
+    };
+    res.send(result);
+});
+
 module.exports = router;
