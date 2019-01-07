@@ -24,7 +24,7 @@ router.get('/profile', function(req, res) {
     const result = {
         id: 17,
         loginId: 'yamdeng',
-        name: '안용성1'
+        name: '안용성3'
     };
     res.send(result);
 });
