@@ -103,4 +103,43 @@ router.get('/appInfo', function(req, res) {
     res.send(result);
 });
 
+// api/gas/errorClientCode : 클라이언트 에러(코드 적용)
+router.get('/errorClientCode', function(req, res) {
+    let result = {
+        code: 404
+    };
+    res.send(result);
+});
+
+// api/gas/errorClient : 클라이언트 에러
+router.get('/errorClient', function(req, res) {
+    res.status(404).send({ error: 'clientError' });
+});
+
+// api/gas/errorServerCode : 서버 에러(코드 적용)
+router.get('/errorServerCode', function(req, res) {
+    let result = {
+        code: 500
+    };
+    res.send(result);
+});
+
+// api/gas/errorServer : 서버 에러
+router.get('/errorServer', function(req, res) {
+    res.status(500).send({ error: 'serverError' });
+});
+
+// api/gas/errorAuthCode : 권한 에러(코드 적용)
+router.get('/errorAuthCode', function(req, res) {
+    let result = {
+        code: 403
+    };
+    res.send(result);
+});
+
+// api/gas/errorAuth : 권한 에러
+router.get('/errorAuth', function(req, res) {
+    res.status(403).send({ error: 'authError' });
+});
+
 module.exports = router;
