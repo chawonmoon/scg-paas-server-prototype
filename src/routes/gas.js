@@ -142,4 +142,29 @@ router.get('/errorAuth', function(req, res) {
     res.status(403).send({ error: 'authError' });
 });
 
+// api/gas/tableScroll : 테이블 스크롤 페이지
+router.get('/tableScroll', function(req, res) {
+    const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5000000;
+    const page = req.query.page ? Number(req.query.page) : 1;
+    let result = {};
+    result.totalCount = data.tableScrollData.length;
+    result.data = data.tableScrollData.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+    );
+    res.send(result);
+});
+
+router.get('/imageScroll', function(req, res) {
+    const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5000000;
+    const page = req.query.page ? Number(req.query.page) : 1;
+    let result = {};
+    result.totalCount = data.imageScrollData.length;
+    result.data = data.imageScrollData.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+    );
+    res.send(result);
+});
+
 module.exports = router;
