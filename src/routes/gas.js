@@ -167,4 +167,10 @@ router.get('/imageScroll', function(req, res) {
     res.send(result);
 });
 
+// api/gas/formJson : formJson test
+router.post('/formJson', function(req, res) {
+    console.log('fromJson json body : ' + JSON.stringify(req.body));
+    res.send(req.body);
+});
+
 module.exports = router;
