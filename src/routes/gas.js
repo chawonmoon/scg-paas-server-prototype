@@ -155,6 +155,7 @@ router.get('/tableScroll', function(req, res) {
     res.send(result);
 });
 
+// api/gas/imageScroll : 이미지 스크롤 페이지
 router.get('/imageScroll', function(req, res) {
     const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5000000;
     const page = req.query.page ? Number(req.query.page) : 1;
