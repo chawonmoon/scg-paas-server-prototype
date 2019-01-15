@@ -4,6 +4,7 @@ const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 const data = require('../utils/data');
+const Config = require('../config');
 
 /*
 
@@ -98,7 +99,7 @@ router.get('/tariff/:tariffId', function(req, res) {
 // api/gas/appInfo : 앱 버전
 router.get('/appInfo', function(req, res) {
     let result = {
-        version: 'v.2.5.1'
+        version: Config.version
     };
     res.send(result);
 });

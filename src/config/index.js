@@ -31,4 +31,7 @@ config.db = {
     database: databaseName
 };
 
+// version
+config.version = '0.1v';
+
 module.exports = config;
