@@ -2,9 +2,18 @@
 
 const logger = require('./utils/logger');
 const process = require('process');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const httpOptions = {
+    key: fs.readFileSync('security/localhttps.pem'),
+    cert: fs.readFileSync('security/cert.pem')
+};
 
 // PORT 아규먼트가 전달이 않되어있을때는 3000 PORT를 default로 server run
 let serverListenPort = process.env.PORT || 3000;
+
+let httpsPort = process.env.HTTPSPORT || 443;
 
 let app = null;
 try {
@@ -18,8 +27,12 @@ try {
     process.exit(-1);
 }
 
-app.listen(serverListenPort, () => {
+http.createServer(app).listen(serverListenPort, function() {
     logger.info('scg-paas prototype server ' + serverListenPort);
+});
+
+https.createServer(httpOptions, app).listen(httpsPort, function() {
+    logger.info('scg-paas prototype https server ' + httpsPort);
 });
 
 // 전역 promise 오류(reject) catch
