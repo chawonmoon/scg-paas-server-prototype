@@ -14,4 +14,5 @@
  4. cat cert.pem
 
  #.aws ec2 설정
- 1. sudo setcap 'cap_net_bind_service=+ep' $NODE_PATH
+ 1. NODE_PATH=$(which node)
+ 2. sudo setcap 'cap_net_bind_service=+ep' $NODE_PATH
