@@ -32,6 +32,6 @@ config.db = {
 };
 
 // version
-config.version = '0.1v';
+config.version = '0.2v';
 
 module.exports = config;
