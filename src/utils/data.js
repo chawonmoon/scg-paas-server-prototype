@@ -376,4 +376,12 @@ for (let index = 0; index < 30; index++) {
     data.imageScrollData.push({ id: index + 1, name: '사진' + (index + 1) });
 }
 
+/*
+
+    게시글 : Restful Api
+
+*/
+
+data.boardList = [];
+
 module.exports = data;

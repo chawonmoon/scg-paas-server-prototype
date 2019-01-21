@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../utils/data');
 const Config = require('../config');
+const AppError = require('../errors/AppError');
 
 /*
 
@@ -173,6 +174,61 @@ router.get('/imageScroll', function(req, res) {
 router.post('/formJson', function(req, res) {
     console.log('fromJson json body : ' + JSON.stringify(req.body));
     res.send(req.body);
+});
+
+// api/gas/board(post) : board
+router.post('/board', function(req, res) {
+    console.log('board json body : ' + JSON.stringify(req.body));
+    let newBoard = Object.assign(req.body, { id: _.uniqueId('') });
+    newBoard.created = new Date();
+    newBoard.lastModified = new Date();
+    data.boardList.push(newBoard);
+    res.send(newBoard);
+});
+
+// api/gas/board/:id(put) : board
+router.put('/board/:id', function(req, res) {
+    console.log('board json body : ' + JSON.stringify(req.body));
+    let boardIndex = _.findIndex(data.boardList, info => {
+        return info.id === req.params.id;
+    });
+    if (boardIndex !== -1) {
+        let updateBoard = data.boardList[boardIndex];
+        updateBoard.lastModified = new Date();
+        Object.assign(updateBoard, req.body);
+        res.send(updateBoard);
+    } else {
+        throw new AppError('board not found : ' + req.params.id, null, 404);
+    }
+});
+
+// api/gas/board/:id(get) : board
+router.get('/board/:id', function(req, res) {
+    console.log('board id : ' + req.params.id);
+    let boardIndex = _.findIndex(data.boardList, info => {
+        return info.id === req.params.id;
+    });
+    if (boardIndex !== -1) {
+        let detailBoard = data.boardList[boardIndex];
+        res.send(detailBoard);
+    } else {
+        throw new AppError('board not found : ' + req.params.id, null, 404);
+    }
+});
+
+// api/gas/board(get) : board
+router.get('/board', function(req, res) {
+    console.log('boardList length : ' + data.boardList.length);
+    res.send(data.boardList);
+});
+
+// api/gas/board/:id(delete) : board
+router.delete('/board/:id', function(req, res) {
+    console.log('board id : ' + req.params.id);
+    _.remove(data.boardList, info => {
+        return req.params.id === info.id;
+    });
+    res.send({ success: true });
 });
 
 module.exports = router;
