@@ -231,4 +231,18 @@ router.delete('/board/:id', function(req, res) {
     res.send({ success: true });
 });
 
+// api/gas/board/:id(delete) : board
+router.delete('/board/:id', function(req, res) {
+    console.log('board id : ' + req.params.id);
+    _.remove(data.boardList, info => {
+        return req.params.id === info.id;
+    });
+    res.send({ success: true });
+});
+
+// api/gas/board(delete) : board
+router.delete('/board', function(req, res) {
+    data.boardList = [];
+    res.send({ success: true });
+});
 module.exports = router;
