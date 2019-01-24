@@ -26,6 +26,8 @@ app.use(compress())
 app.use(loggerMiddleware);
 app.use(CONFIG.API_PREFIX_URL + '/application', applicationRoute);
 app.use(CONFIG.API_PREFIX_URL + '/gas', gasRoute);
+app.use(CONFIG.API_PREFIX_URL + '/seoul/gas', gasRoute);
+app.use(CONFIG.API_PREFIX_URL + '/inchon/gas', gasRoute);
 app.use(CONFIG.API_PREFIX_URL + '/front', frontRoute);
 
 app.use(errorMiddleware.notFoundHandler)
