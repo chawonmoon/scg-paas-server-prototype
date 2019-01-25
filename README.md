@@ -16,3 +16,6 @@
  #.aws ec2 설정
  1. NODE_PATH=$(which node)
  2. sudo setcap 'cap_net_bind_service=+ep' $NODE_PATH
+
+ #.mariadb 맥에서 서비스로 등록시키기
+ 1. brew services start mariadb
