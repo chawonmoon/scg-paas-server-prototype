@@ -19,3 +19,19 @@
 
  #.mariadb 맥에서 서비스로 등록시키기
  1. brew services start mariadb
+
+ #.서버 DB 작업
+mysql -u root
+use mysql;
+update user set authentication_string=password('1234') where user='root';
+flush privileges;
+grant all privileges on *.* to root@'%' identified by '1234' with grant option;
+flush privileges;
+
+mysql.server start --skip-grant-tables
+
+grant all privileges on *.* to yamdeng@'%' identified by '1234' with grant option;
+flush privileges;
+
+grant all privileges on *.* to yamdeng@localhost identified by '1234' with grant option;
+flush privileges;
