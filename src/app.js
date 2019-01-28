@@ -17,6 +17,7 @@ appInit(app);
 
 app.use(compress())
     .use(express.static(__dirname + '/../public'))
+    .use('/admin', express.static(__dirname + '/../admin'))
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
     .options('*', cors())
