@@ -32,6 +32,12 @@ config.db = {
 };
 
 // version
-config.version = '0.4.2v';
+config.version = '0.4.3v';
+
+// file upload path
+config.fileUploadPath = 'public/image';
+
+// file download prefix uri
+config.fileDownloadPrefixUri = '/image/';
 
 module.exports = config;
