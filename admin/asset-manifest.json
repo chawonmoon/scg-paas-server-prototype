@@ -7,9 +7,9 @@
   "static/js/1.chunk.js.map": "/admin/static/js/1.chunk.js.map",
   "runtime~main.js": "/admin/static/js/runtime~main.js",
   "runtime~main.js.map": "/admin/static/js/runtime~main.js.map",
-  "static/css/1.chunk.css.map": "/admin/static/css/1.chunk.css.map",
   "static/css/main.chunk.css.map": "/admin/static/css/main.chunk.css.map",
+  "static/css/1.chunk.css.map": "/admin/static/css/1.chunk.css.map",
   "index.html": "/admin/index.html",
-  "precache-manifest.cb28a1224e237cf27b44448254fbb69d.js": "/admin/precache-manifest.cb28a1224e237cf27b44448254fbb69d.js",
+  "precache-manifest.d1f058bf35b9bdc46392ca2f34d285fc.js": "/admin/precache-manifest.d1f058bf35b9bdc46392ca2f34d285fc.js",
   "service-worker.js": "/admin/service-worker.js"
 }
