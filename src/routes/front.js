@@ -182,4 +182,32 @@ router.post('/uploadImage', upload.single('imageFile'), function(req, res) {
     res.send(uploadFileInfo);
 });
 
+// 파일 업로드
+router.post('/uploadImageCkEditor', upload.single('imageFile'), function(
+    req,
+    res
+) {
+    let file = req.file;
+    let uploadFileInfo = {};
+    uploadFileInfo.status = 'upload';
+    uploadFileInfo.fileName = file.originalname;
+    uploadFileInfo.fileTempName = file.filename;
+    uploadFileInfo.fileSize = file.size;
+    uploadFileInfo.fileExtension = file.originalname.substr(
+        file.originalname.lastIndexOf('.') + 1
+    );
+    uploadFileInfo.fileFullName =
+        uploadFileInfo.fileTempName + '.' + uploadFileInfo.fileExtension;
+    uploadFileInfo.fileType = file.mimetype;
+    fs.renameSync(
+        Config.fileUploadPath + path.sep + uploadFileInfo.fileTempName,
+        Config.fileUploadPath + path.sep + uploadFileInfo.fileFullName
+    );
+    uploadFileInfo.fileUrl =
+        Config.fileDownloadPrefixUri + uploadFileInfo.fileFullName;
+    uploadFileInfo.uploaded = 1;
+    uploadFileInfo.url = uploadFileInfo.fileUrl;
+    res.send(uploadFileInfo);
+});
+
 module.exports = router;
