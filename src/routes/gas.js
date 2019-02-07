@@ -21,6 +21,11 @@ router.get('/homeInfos', function(req, res) {
     res.send(data.homeInfos);
 });
 
+// /api/gas/homeInfos/:homeIndex
+router.get('/homeInfos/:homeIndex', function(req, res) {
+    res.send(data.homeInfos[Number(req.params.homeIndex)]);
+});
+
 // /api/gas/profile : 프로필
 router.get('/profile', function(req, res) {
     const result = {
