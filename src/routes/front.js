@@ -13,6 +13,12 @@ const multer = require('multer');
 const upload = multer({ dest: Config.fileUploadPath });
 const fs = require('fs');
 const path = require('path');
+const data = require('../utils/data');
+
+// /api/front/mapClusterData : daum map cluster 예제 데이터
+router.get('/mapClusterData', function(req, res) {
+    res.send(data.mapClusterData);
+});
 
 // table select
 router.get('/selectTable/:table_name', function(req, res, next) {
