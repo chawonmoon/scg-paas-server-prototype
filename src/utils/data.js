@@ -385,6 +385,19 @@ for (let index = 0; index < 30; index++) {
 data.boardList = [];
 
 /*
+
+    현재 위치 기준으로 가장 가까운 계측기 정보
+
+*/
+
+data.nearInfo = {
+    lat: 37.27943075229118,
+    lng: 127.01763998406159,
+    devno: '007',
+    distance: 50
+};
+
+/*
     
     지도 cluster data
 

@@ -20,6 +20,11 @@ router.get('/mapClusterData', function(req, res) {
     res.send(data.mapClusterData);
 });
 
+// /api/front/getNearInfo : 가장 가까운 계측기 정보(위도, 경도, devno, 거리)
+router.get('/getNearInfo', function(req, res) {
+    res.send(data.nearInfo);
+});
+
 // table select
 router.get('/selectTable/:table_name', function(req, res, next) {
     dbService
