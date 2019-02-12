@@ -25,6 +25,11 @@ router.get('/getNearInfo', function(req, res) {
     res.send(data.nearInfo);
 });
 
+// /api/front/dustInfos : 먼지 정보(list)
+router.get('/dustInfos', function(req, res) {
+    res.send(data.dustInfos);
+});
+
 // table select
 router.get('/selectTable/:table_name', function(req, res, next) {
     dbService
