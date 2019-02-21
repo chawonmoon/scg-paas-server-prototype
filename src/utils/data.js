@@ -373,7 +373,11 @@ for (let index = 0; index < 30; index++) {
 
 data.imageScrollData = [];
 for (let index = 0; index < 30; index++) {
-    data.imageScrollData.push({ id: index + 1, name: '사진' + (index + 1) });
+    data.imageScrollData.push({
+        id: index + 1,
+        name: '사진' + (index + 1),
+        platform: index % 2 === 0 ? 'ios' : 'android'
+    });
 }
 
 /*
