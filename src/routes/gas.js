@@ -250,4 +250,14 @@ router.delete('/board', function(req, res) {
     data.boardList = [];
     res.send({ success: true });
 });
+
+// select2 data
+router.get('/selectSearch', function(req, res) {
+    const search = req.query.search;
+    const searchData = _.filter(data.selectSearchData, function(info) {
+        return info.name.indexOf(search) !== -1;
+    });
+    res.send(searchData);
+});
+
 module.exports = router;

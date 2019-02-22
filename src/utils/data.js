@@ -1093,4 +1093,24 @@ data.dustInfos = [
     }
 ];
 
+/*
+
+    image page scroll data
+
+*/
+
+data.selectSearchData = [];
+for (let index = 0; index < 100; index++) {
+    data.selectSearchData.push({
+        id: index + 1 + 'A',
+        name: '안용성' + (index + 1),
+        dept: index % 2 === 0 ? 'scglab' : '신규사업팀'
+    });
+    data.selectSearchData.push({
+        id: index + 1 + 'H',
+        name: '황승연' + (index + 1),
+        dept: index % 2 === 0 ? 'scglab' : '신규사업팀'
+    });
+}
+
 module.exports = data;
