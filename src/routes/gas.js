@@ -265,6 +265,17 @@ router.get('/dragdropData', function(req, res) {
     res.send(data.dragdropData);
 });
 
+// data.dragdropData add
+router.post('/dragdropData', function(req, res) {
+    let newDragDropData = Object.assign({}, req.body);
+    newDragDropData.id = _.uniqueId('dragtest_');
+    newDragDropData.sortIndex =
+        data.dragdropData[data.dragdropData.length - 1].sortIndex + 1;
+    data.dragdropData.push(newDragDropData);
+    data.dragdropData = _.orderBy(data.dragdropData, ['sortIndex'], ['asc']);
+    res.send({ success: true });
+});
+
 // data.dragdropData sortIndex Update
 router.put('/dragdropData/:id', function(req, res) {
     let updateSortIndex = req.body.sortIndex;
