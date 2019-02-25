@@ -1113,4 +1113,19 @@ for (let index = 0; index < 100; index++) {
     });
 }
 
+/*
+
+    darganddrop 데이터
+
+*/
+
+data.dragdropData = [];
+for (let dragdropDataIndex = 0; dragdropDataIndex < 10; dragdropDataIndex++) {
+    data.dragdropData.push({
+        id: _.uniqueId('dragtest_'),
+        name: 'drag ' + (dragdropDataIndex + 1),
+        sortIndex: dragdropDataIndex
+    });
+}
+
 module.exports = data;

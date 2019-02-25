@@ -260,4 +260,27 @@ router.get('/selectSearch', function(req, res) {
     res.send(searchData);
 });
 
+// data.dragdropData list
+router.get('/dragdropData', function(req, res) {
+    res.send(data.dragdropData);
+});
+
+// data.dragdropData sortIndex Update
+router.put('/dragdropData/:id', function(req, res) {
+    let updateSortIndex = req.body.sortIndex;
+    let searchIndex = _.findIndex(data.dragdropData, info => {
+        return info.id === req.params.id;
+    });
+    let updateInfo = data.dragdropData[searchIndex];
+    updateInfo.sortIndex = updateSortIndex;
+    for (let index = 0; index < data.dragdropData.length; index++) {
+        let info = data.dragdropData[index];
+        if (info.sortIndex >= updateSortIndex) {
+            info.sortIndex = info.sortIndex + 1;
+        }
+    }
+    data.dragdropData = _.orderBy(data.dragdropData, ['sortIndex'], ['asc']);
+    res.send({ success: true });
+});
+
 module.exports = router;
