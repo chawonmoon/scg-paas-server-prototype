@@ -41,6 +41,31 @@ CREATE TABLE `scgpaas`.`scg_user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `login_id` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
+  `company` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
+  `user_type` VARCHAR(55),
   PRIMARY KEY (`id`));
 
+
+
+{
+  "name": "안용성",
+  "login_id": "yamdeng",
+  "company" : "scglab",
+  "password": "12345",
+  "user_type" : "super"
+}
+
+{
+  "name": "서울1",
+  "login_id": "seoul1",
+  "company" : "seoul",
+  "password": "seoul1"
+}
+
+{
+  "name": "인천1",
+  "login_id": "inchon1",
+  "company" : "inchon",
+  "password": "inchon1"
+}
