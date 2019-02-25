@@ -11,6 +11,7 @@ const applicationRoute = require('./routes/application');
 const gasRoute = require('./routes/gas');
 const frontRoute = require('./routes/front');
 const adminRoute = require('./routes/admin');
+const authRoute = require('./routes/auth');
 const errorMiddleware = require('./middleware/error');
 const loggerMiddleware = require('./middleware/logger');
 const appInit = require('./init');
@@ -26,6 +27,7 @@ app.use(compress())
     .use(favicon(__dirname + '/../public/favicon.ico'));
 
 app.use(loggerMiddleware);
+app.use(CONFIG.API_PREFIX_URL, authRoute);
 app.use(CONFIG.API_PREFIX_URL + '/application', applicationRoute);
 app.use(CONFIG.API_PREFIX_URL + '/gas', gasRoute);
 app.use(CONFIG.API_PREFIX_URL + '/gas/seoul', gasRoute);

@@ -40,4 +40,10 @@ config.fileUploadPath = 'public/image';
 // file download prefix uri
 config.fileDownloadPrefixUri = '/image/';
 
+// 100일
+config.JSONTOKEN_EXPIRE = 60 * 60 * 24 * 100 * 100;
+
+// jsonweb token key
+config.JSONTOKEN_SECRETKEY = 'scgpaasjwtsecretkey';
+
 module.exports = config;

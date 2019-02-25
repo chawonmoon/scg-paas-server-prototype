@@ -35,3 +35,12 @@ flush privileges;
 
 grant all privileges on *.* to yamdeng@localhost identified by '1234' with grant option;
 flush privileges;
+
+#.user table 생성
+CREATE TABLE `scgpaas`.`scg_user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `login_id` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`));
+
