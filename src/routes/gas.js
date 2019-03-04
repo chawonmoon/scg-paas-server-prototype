@@ -294,4 +294,28 @@ router.put('/dragdropData/:id', function(req, res) {
     res.send({ success: true });
 });
 
+// ckeditor get
+router.get('/editor/ckEditorData', function(req, res) {
+    res.send({ data: data.ckEditorData });
+});
+
+// ckeditor update
+router.post('/editor/ckEditorData', function(req, res) {
+    let body = req.body;
+    data.ckEditorData = body.data;
+    res.send({ success: true });
+});
+
+// summerNoteEditorData get
+router.get('/editor/summerNoteEditorData', function(req, res) {
+    res.send({ data: data.summerNoteEditorData });
+});
+
+// summerNoteEditorData update
+router.post('/editor/summerNoteEditorData', function(req, res) {
+    let body = req.body;
+    data.summerNoteEditorData = body.data;
+    res.send({ success: true });
+});
+
 module.exports = router;

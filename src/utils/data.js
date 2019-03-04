@@ -1128,4 +1128,14 @@ for (let dragdropDataIndex = 0; dragdropDataIndex < 10; dragdropDataIndex++) {
     });
 }
 
+/*
+
+    에디터 데이터
+    
+*/
+
+data.ckEditorData = null;
+
+data.summerNoteEditorData = null;
+
 module.exports = data;
