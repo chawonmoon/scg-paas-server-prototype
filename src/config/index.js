@@ -32,7 +32,7 @@ config.db = {
 };
 
 // version
-config.version = '2.7v';
+config.version = '2.8v';
 
 // file upload path
 config.fileUploadPath = 'public/image';
