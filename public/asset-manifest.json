@@ -6,9 +6,9 @@
   "runtime~main.js": "/static/js/runtime~main.js",
   "static/media/1.JPG": "/static/media/1.ce4e0694.JPG",
   "static/media/slick-theme.css": "/static/media/slick.b7c9e1e4.woff",
-  "static/css/main.chunk.css.map": "/static/css/main.chunk.css.map",
   "static/css/1.chunk.css.map": "/static/css/1.chunk.css.map",
+  "static/css/main.chunk.css.map": "/static/css/main.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.4f1bd87964faa0b8ca9eba73b8e28804.js": "/precache-manifest.4f1bd87964faa0b8ca9eba73b8e28804.js",
+  "precache-manifest.95df26608a2d66da95e937b39cc22d3f.js": "/precache-manifest.95df26608a2d66da95e937b39cc22d3f.js",
   "service-worker.js": "/service-worker.js"
 }
