@@ -191,6 +191,16 @@ router.post('/board', function(req, res) {
     res.send(newBoard);
 });
 
+// api/gas/boards(post) : boards
+router.post('/boards', function(req, res) {
+    console.log('board json body : ' + JSON.stringify(req.body));
+    let newBoard = Object.assign(req.body, { id: _.uniqueId('') });
+    newBoard.created = new Date();
+    newBoard.lastModified = new Date();
+    data.boardList.push(newBoard);
+    res.send(newBoard);
+});
+
 // api/gas/board/:id(put) : board
 router.put('/board/:id', function(req, res) {
     console.log('board json body : ' + JSON.stringify(req.body));
@@ -207,8 +217,38 @@ router.put('/board/:id', function(req, res) {
     }
 });
 
+// api/gas/boards/:id(put) : board
+router.put('/boards/:id', function(req, res) {
+    console.log('boards json body : ' + JSON.stringify(req.body));
+    let boardIndex = _.findIndex(data.boardList, info => {
+        return info.id === req.params.id;
+    });
+    if (boardIndex !== -1) {
+        let updateBoard = data.boardList[boardIndex];
+        updateBoard.lastModified = new Date();
+        Object.assign(updateBoard, req.body);
+        res.send(updateBoard);
+    } else {
+        throw new AppError('boards not found : ' + req.params.id, null, 404);
+    }
+});
+
 // api/gas/board/:id(get) : board
 router.get('/board/:id', function(req, res) {
+    console.log('board id : ' + req.params.id);
+    let boardIndex = _.findIndex(data.boardList, info => {
+        return info.id === req.params.id;
+    });
+    if (boardIndex !== -1) {
+        let detailBoard = data.boardList[boardIndex];
+        res.send(detailBoard);
+    } else {
+        throw new AppError('board not found : ' + req.params.id, null, 404);
+    }
+});
+
+// api/gas/boards/:id(get) : boards
+router.get('/boards/:id', function(req, res) {
     console.log('board id : ' + req.params.id);
     let boardIndex = _.findIndex(data.boardList, info => {
         return info.id === req.params.id;
@@ -227,8 +267,8 @@ router.get('/board', function(req, res) {
     res.send(data.boardList);
 });
 
-// api/gas/boardPage(get) : board
-router.get('/boardPage', function(req, res) {
+// api/gas/boards(get) : boards
+router.get('/boards', function(req, res) {
     console.log('boardList length : ' + data.boardList.length);
     const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5000000;
     const page = req.query.page ? Number(req.query.page) : 1;
@@ -248,8 +288,8 @@ router.delete('/board/:id', function(req, res) {
 });
 
 // api/gas/board/:id(delete) : board
-router.delete('/board/:id', function(req, res) {
-    console.log('board id : ' + req.params.id);
+router.delete('/boards/:id', function(req, res) {
+    console.log('boards id : ' + req.params.id);
     _.remove(data.boardList, info => {
         return req.params.id === info.id;
     });
