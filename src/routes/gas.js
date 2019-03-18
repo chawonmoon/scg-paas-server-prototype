@@ -227,6 +227,17 @@ router.get('/board', function(req, res) {
     res.send(data.boardList);
 });
 
+// api/gas/boardPage(get) : board
+router.get('/boardPage', function(req, res) {
+    console.log('boardList length : ' + data.boardList.length);
+    const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5000000;
+    const page = req.query.page ? Number(req.query.page) : 1;
+    let result = {};
+    result.totalCount = data.boardList.length;
+    result.data = data.boardList.slice((page - 1) * pageSize, page * pageSize);
+    res.send(result);
+});
+
 // api/gas/board/:id(delete) : board
 router.delete('/board/:id', function(req, res) {
     console.log('board id : ' + req.params.id);
