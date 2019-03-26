@@ -12,6 +12,7 @@ const gasRoute = require('./routes/gas');
 const frontRoute = require('./routes/front');
 const adminRoute = require('./routes/admin');
 const authRoute = require('./routes/auth');
+const viewRoute = require('./routes/view');
 const errorMiddleware = require('./middleware/error');
 const loggerMiddleware = require('./middleware/logger');
 const appInit = require('./init');
@@ -34,6 +35,7 @@ app.use(CONFIG.API_PREFIX_URL + '/gas/seoul', gasRoute);
 app.use(CONFIG.API_PREFIX_URL + '/gas/inchon', gasRoute);
 app.use(CONFIG.API_PREFIX_URL + '/front', frontRoute);
 app.use(CONFIG.API_PREFIX_URL + '/admin', adminRoute);
+app.use('/view', viewRoute);
 
 app.use(errorMiddleware.notFoundHandler)
     .use(errorMiddleware.errorLogger)
