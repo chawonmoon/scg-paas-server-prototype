@@ -6,7 +6,10 @@ router.post('/form', function(req, res) {
 });
 
 router.post('/redirect', function(req, res) {
-    res.redirect('http://localhost:3001/signresult.html');
+    console.log(JSON.stringify(req.body));
+    let bodyData = req.body;
+    // http://localhost:3001/signresult.html
+    res.redirect(bodyData.url);
 });
 
 module.exports = router;
