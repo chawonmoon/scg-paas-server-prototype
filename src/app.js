@@ -13,6 +13,12 @@ const frontRoute = require('./routes/front');
 const adminRoute = require('./routes/admin');
 const authRoute = require('./routes/auth');
 const viewRoute = require('./routes/view');
+const boardRoute = require('./routes/board');
+const infoRoute = require('./routes/info');
+const checkRoute = require('./routes/check');
+const randomRoute = require('./routes/random');
+const blockRoute = require('./routes/block');
+const userRoute = require('./routes/user');
 const errorMiddleware = require('./middleware/error');
 const loggerMiddleware = require('./middleware/logger');
 const appInit = require('./init');
@@ -35,6 +41,12 @@ app.use(CONFIG.API_PREFIX_URL + '/gas/seoul', gasRoute);
 app.use(CONFIG.API_PREFIX_URL + '/gas/inchon', gasRoute);
 app.use(CONFIG.API_PREFIX_URL + '/front', frontRoute);
 app.use(CONFIG.API_PREFIX_URL + '/admin', adminRoute);
+app.use(CONFIG.API_PREFIX_URL + '/boards', boardRoute);
+app.use(CONFIG.API_PREFIX_URL + '/infos', infoRoute);
+app.use(CONFIG.API_PREFIX_URL + '/checks', checkRoute);
+app.use(CONFIG.API_PREFIX_URL + '/randoms', randomRoute);
+app.use(CONFIG.API_PREFIX_URL + '/blocks', blockRoute);
+app.use(CONFIG.API_PREFIX_URL + '/users', userRoute);
 app.use('/view', viewRoute);
 
 app.use(errorMiddleware.notFoundHandler)

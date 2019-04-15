@@ -10,6 +10,11 @@ const Config = require('../config/index');
 const errorRouteHandler = require('../errors/routeHandler');
 const AppError = require('../errors/AppError');
 const dbService = require('../services/db');
+const os = require('os');
+const multer = require('multer');
+const upload = multer({ dest: Config.fileUploadPath });
+const fs = require('fs');
+const path = require('path');
 
 // 로그인
 router.post('/login', function(req, res, next) {
@@ -64,6 +69,28 @@ router.get('/loginUserInfo', authMiddleware, function(req, res) {
     } catch (err) {
         throw new AppError('인증정보가 존재하지 않습니다', [err], 403);
     }
+});
+
+router.post('/uploadFile', upload.single('file'), function (req, res) {
+    let file = req.file;
+    let uploadFileInfo = {};
+    uploadFileInfo.status = 'upload';
+    uploadFileInfo.fileName = file.originalname;
+    uploadFileInfo.fileTempName = file.filename;
+    uploadFileInfo.fileSize = file.size;
+    uploadFileInfo.fileExtension = file.originalname.substr(
+        file.originalname.lastIndexOf('.') + 1
+    );
+    uploadFileInfo.fileFullName =
+        uploadFileInfo.fileTempName + '.' + uploadFileInfo.fileExtension;
+    uploadFileInfo.fileType = file.mimetype;
+    fs.renameSync(
+        Config.fileUploadPath + path.sep + uploadFileInfo.fileTempName,
+        Config.fileUploadPath + path.sep + uploadFileInfo.fileFullName
+    );
+    uploadFileInfo.fileUrl =
+        Config.fileDownloadPrefixUri + uploadFileInfo.fileFullName;
+    res.send(uploadFileInfo);
 });
 
 module.exports = router;

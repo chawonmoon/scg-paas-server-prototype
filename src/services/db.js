@@ -2,6 +2,7 @@
 
 const CONFIG = require('../config');
 const logger = require('../utils/logger');
+const AppError = require('../errors/AppError');
 const mysql = require('mysql');
 const _ = require('lodash');
 
@@ -78,7 +79,12 @@ service.connect = function() {
 */
 
 const queryInfo = {
-    findUserByLoginId: 'SELECT * FROM scg_user WHERE login_id = ?'
+    findUserByLoginId: 'SELECT * FROM scg_user WHERE login_id = ?',
+    updateInfoSortIndexPlus:
+        'UPDATE scg_info set sort_index = sort_index + 2 where sort_index >= ?',
+    searchInfo: 'SELECT * FROM scg_info order by sort_index asc',
+    findBlockRelation:
+        'SELECT b1.id, b1.name FROM scg_block_relation r1 inner join scg_block b1 on r1.block_child_id = b1.id where r1.block_id = ?'
 };
 
 // common insert
@@ -226,7 +232,7 @@ service.selectOne = function(tableName, idColumn, id) {
                     if (results.length > 0) {
                         resolve(results[0]);
                     } else {
-                        resolve(null);
+                        reject(new AppError('not found', null, 404));
                     }
                 }
             }
