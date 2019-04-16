@@ -14,6 +14,7 @@ const multer = require('multer');
 const upload = multer({ dest: Config.fileUploadPath });
 const fs = require('fs');
 const path = require('path');
+const shortid = require('shortid');
 
 // 로그인
 router.post('/login', function(req, res, next) {
@@ -83,8 +84,9 @@ router.get('/profile', authMiddleware, function(req, res) {
     }
 });
 
-router.post('/uploadFile', upload.single('file'), function(req, res) {
+router.post('/uploadFile', upload.single('file'), function(req, res, next) {
     let file = req.file;
+    let bodyInfo = req.body;
     let uploadFileInfo = {};
     uploadFileInfo.status = 'upload';
     uploadFileInfo.fileName = file.originalname;
@@ -102,7 +104,24 @@ router.post('/uploadFile', upload.single('file'), function(req, res) {
     );
     uploadFileInfo.fileUrl =
         Config.fileDownloadPrefixUri + uploadFileInfo.fileFullName;
-    res.send(uploadFileInfo);
+    const fileId = shortid.generate();
+    // id, file_type, file_size, file_name, object_type, file_ext
+    const dbObject = {};
+    dbObject.id = fileId;
+    dbObject.file_type = file.mimetype;
+    dbObject.file_size = file.size;
+    dbObject.file_name = file.originalname;
+    dbObject.file_path = '';
+    dbObject.object_type = bodyInfo.object_type;
+    dbObject.file_ext = file.originalname.substr(
+        file.originalname.lastIndexOf('.') + 1
+    );
+    dbService
+        .insert('scg_file', dbObject)
+        .then(() => {
+            res.send(dbObject);
+        })
+        .catch(errorRouteHandler(next));
 });
 
 module.exports = router;
