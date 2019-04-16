@@ -10,7 +10,6 @@ const Config = require('../config/index');
 const errorRouteHandler = require('../errors/routeHandler');
 const AppError = require('../errors/AppError');
 const dbService = require('../services/db');
-const os = require('os');
 const multer = require('multer');
 const upload = multer({ dest: Config.fileUploadPath });
 const fs = require('fs');
@@ -71,7 +70,20 @@ router.get('/loginUserInfo', authMiddleware, function(req, res) {
     }
 });
 
-router.post('/uploadFile', upload.single('file'), function (req, res) {
+router.get('/profile', authMiddleware, function(req, res) {
+    let loginUser = null;
+    try {
+        loginUser = jwt.verify(
+            req.headers.authorization,
+            Config.JSONTOKEN_SECRETKEY
+        );
+        res.send({ loginInfo: loginUser });
+    } catch (err) {
+        throw new AppError('인증정보가 존재하지 않습니다', [err], 403);
+    }
+});
+
+router.post('/uploadFile', upload.single('file'), function(req, res) {
     let file = req.file;
     let uploadFileInfo = {};
     uploadFileInfo.status = 'upload';
