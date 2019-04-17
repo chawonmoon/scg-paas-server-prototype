@@ -69,3 +69,41 @@ CREATE TABLE `scgpaas`.`scg_user` (
   "company" : "inchon",
   "password": "inchon1"
 }
+
+# aws 작업
+ 1. 인스턴스 생성
+ 2. 키생성 및 다운로드
+  -다운로드한 키의 권한을 chmod 400 scgpaas.pem 로 수정
+  -ssh 접속 확인 : ssh -i "scgpaas.pem" ec2-user@ec2-3-0-184-167.ap-southeast-1.compute.amazonaws.com
+ 3. git 설치
+  -sudo yum install git
+ 4. git clone https://github.com/yamdeng/scg-paas-server-prototype.git
+ 5. git config --global credential.helper cache
+ 6. node 설치
+  -curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+  -. ~/.nvm/nvm.sh
+  -nvm install 10.15.3
+  -npm i -g yarn
+  -yarn
+ 7.yum 최신화
+  -sudo yum update -y
+ 8.mariadb 설치
+  -sudo yum install -y httpd mariadb-server
+ 9.mariadb 실행
+  -sudo systemctl start mariadb
+  -sudo mysql_secure_installation ---> root password 설정
+  -root / 1234
+10. sudo yum install telnet
+11. 데이터베이스 생성
+ -CREATE DATABASE scgpaas;
+12. 사용자 권한 부여
+ -grant all privileges on *.* to root@'%' identified by '1234' with grant option;
+ -flush privileges;
+13. 사용자 생성(UI에서) : yamdeng
+14. 데이터베이스 권한 부여
+ -grant all privileges on *.* to yamdeng@'%' identified by '1234' with grant option;
+ -flush privileges;
+15. 툴에서 접속 확인
+16. init.sql 데이터베이스 초기화
+
+

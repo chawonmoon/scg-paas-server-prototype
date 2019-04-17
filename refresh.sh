@@ -20,4 +20,3 @@ if [ $var2 -gt 2 ]
 fi
 echo "scg-shell exit"
 exit 0
-
