@@ -103,7 +103,14 @@ CREATE TABLE `scgpaas`.`scg_user` (
 14. 데이터베이스 권한 부여
  -grant all privileges on *.* to yamdeng@'%' identified by '1234' with grant option;
  -flush privileges;
+ -grant all privileges on *.* to yamdeng@localhost identified by '1234' with grant option;
+ -flush privileges;
+ -grant all privileges on *.* to yamdeng@127.0.0.1 identified by '1234' with grant option;
+ -flush privileges;
 15. 툴에서 접속 확인
 16. init.sql 데이터베이스 초기화
+17. https 설정
+ -NODE_PATH=$(which node)
+ -sudo setcap 'cap_net_bind_service=+ep' $NODE_PATH
 
-
+ /home/ec2-user/.nvm/versions/node/v10.15.3/bin
