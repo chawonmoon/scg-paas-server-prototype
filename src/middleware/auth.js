@@ -14,6 +14,6 @@ module.exports = function hanlder(req, res, next) {
         next();
     } catch(err) {
         logger.error('auth middleware error : ' + err);
-        throw new AppError('인증정보가 존재하지 않습니다', [err], 403);
+        throw new AppError('인증정보가 존재하지 않습니다', [err], 401);
     }
 };
