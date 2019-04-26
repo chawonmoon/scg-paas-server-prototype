@@ -72,16 +72,7 @@ router.get('/loginUserInfo', authMiddleware, function(req, res) {
 });
 
 router.get('/profile', authMiddleware, function(req, res) {
-    let loginUser = null;
-    try {
-        loginUser = jwt.verify(
-            req.headers.authorization,
-            Config.JSONTOKEN_SECRETKEY
-        );
-        res.send({ loginInfo: loginUser });
-    } catch (err) {
-        throw new AppError('인증정보가 존재하지 않습니다', [err], 403);
-    }
+    res.send({ loginInfo: req.loginUser });
 });
 
 router.post('/uploadFile', upload.single('file'), function(req, res, next) {
