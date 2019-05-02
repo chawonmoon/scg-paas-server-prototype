@@ -74,6 +74,7 @@ router.post('/', function(req, res, next) {
     dbObject.sort_index = bodyInfo.sort_index;
     dbObject.status = bodyInfo.status;
     dbObject.file_id = bodyInfo.file_id;
+    dbObject.file_id = bodyInfo.color;
     dbService
         .insert('scg_info', dbObject)
         .then(() => {
@@ -91,6 +92,7 @@ router.put('/:id', function(req, res, next) {
     dbObject.sort_index = bodyInfo.sort_index;
     dbObject.status = bodyInfo.status;
     dbObject.file_id = bodyInfo.file_id;
+    
     dbObject.last_modified_date = moment().format('YYYY-MM-DD HH:mm:ss');
     dbService
         .update('scg_info', dbObject, 'id', req.params.id)
