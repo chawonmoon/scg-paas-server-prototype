@@ -34,7 +34,9 @@ router.get('/', function(req, res, next) {
             countQueryParams.push(pageSize * (page - 1));
             countQueryParams.push(pageSize);
             selectQueryStr =
-                selectQueryStr + whereQueryStr + ' order by id desc limit ?, ?';
+                selectQueryStr +
+                whereQueryStr +
+                ' order by id desc sort_index ?, ?';
             let apiResult = {};
             const totalCount = countResult[0].totalCount;
             apiResult.totalCount = totalCount;
