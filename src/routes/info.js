@@ -6,53 +6,46 @@ const moment = require('moment');
 
 // info 검색
 router.get('/', function(req, res, next) {
+    let search_kind = req.query.search_kind;
+    let search_value = req.query.search_value || '';
+    const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5000000;
+    const page = req.query.page ? Number(req.query.page) : 1;
+    let selectQueryStr = 'select * from scg_info where 1=1';
+    let selectCountQueryStr =
+        'SELECT ifnull(count(id), 0) AS totalCount FROM scg_info where 1=1';
+    let countQueryParams = [];
+    let whereQueryStr = '';
+    if (search_kind === 'title') {
+        whereQueryStr = ' and (scg_info.title like ?)';
+        countQueryParams.push('%' + search_value + '%');
+    } else if (search_kind === 'content') {
+        whereQueryStr = ' and (scg_info.content like ?)';
+        countQueryParams.push('%' + search_value + '%');
+    } else {
+        whereQueryStr =
+            ' and (scg_info.title like ? or ' + 'scg_info.content like ?)';
+        countQueryParams.push('%' + search_value + '%');
+        countQueryParams.push('%' + search_value + '%');
+    }
+    selectCountQueryStr = selectCountQueryStr + whereQueryStr;
     dbService
-        .selectQueryById('searchInfo', [])
-        .then(result => {
-            res.send(result);
+        .selectQueryByStr(selectCountQueryStr, countQueryParams)
+        .then(countResult => {
+            countQueryParams.push(pageSize * (page - 1));
+            countQueryParams.push(pageSize);
+            selectQueryStr =
+                selectQueryStr + whereQueryStr + ' order by id desc limit ?, ?';
+            let apiResult = {};
+            const totalCount = countResult[0].totalCount;
+            apiResult.totalCount = totalCount;
+            dbService
+                .selectQueryByStr(selectQueryStr, countQueryParams)
+                .then(listResult => {
+                    apiResult.data = listResult;
+                    res.send(apiResult);
+                });
         })
         .catch(errorRouteHandler(next));
-
-    // let search_kind = req.query.search_kind;
-    // let search_value = req.query.search_value || '';
-    // const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5000000;
-    // const page = req.query.page ? Number(req.query.page) : 1;
-    // let selectQueryStr = 'select * from scg_info where 1=1';
-    // let selectCountQueryStr =
-    //     'SELECT ifnull(count(id), 0) AS totalCount FROM scg_info where 1=1';
-    // let countQueryParams = [];
-    // let whereQueryStr = '';
-    // if (search_kind === 'title') {
-    //     whereQueryStr = ' and (scg_info.title like ?)';
-    //     countQueryParams.push('%' + search_value + '%');
-    // } else if (search_kind === 'content') {
-    //     whereQueryStr = ' and (scg_info.content like ?)';
-    //     countQueryParams.push('%' + search_value + '%');
-    // } else {
-    //     whereQueryStr =
-    //         ' and (scg_info.title like ? or ' + 'scg_info.content like ?)';
-    //     countQueryParams.push('%' + search_value + '%');
-    //     countQueryParams.push('%' + search_value + '%');
-    // }
-    // selectCountQueryStr = selectCountQueryStr + whereQueryStr;
-    // dbService
-    //     .selectQueryByStr(selectCountQueryStr, countQueryParams)
-    //     .then(countResult => {
-    //         countQueryParams.push(pageSize * (page - 1));
-    //         countQueryParams.push(pageSize);
-    //         selectQueryStr =
-    //             selectQueryStr + whereQueryStr + ' order by id desc limit ?, ?';
-    //         let apiResult = {};
-    //         const totalCount = countResult[0].totalCount;
-    //         apiResult.totalCount = totalCount;
-    //         dbService
-    //             .selectQueryByStr(selectQueryStr, countQueryParams)
-    //             .then(listResult => {
-    //                 apiResult.data = listResult;
-    //                 res.send(apiResult);
-    //             });
-    //     })
-    //     .catch(errorRouteHandler(next));
 });
 
 // info 한건 조회
