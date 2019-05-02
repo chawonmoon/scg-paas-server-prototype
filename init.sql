@@ -66,6 +66,7 @@ CREATE TABLE `scg_info` (
   `content` varchar(4000) DEFAULT NULL,
   `title` varchar(4000) NOT NULL,
   `status` varchar(10) NOT NULL,
+  `color` varchar(10) NOT NULL,
   `sort_index` int(11) NOT NULL,
   `file_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -144,3 +145,6 @@ CREATE TABLE `scg_block_relation` (
   CONSTRAINT `scg_blockchild_ibfk_2` FOREIGN KEY (`block_child_id`) REFERENCES `scg_block` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- 수정분
+ALTER TABLE scg_info ADD COLUMN color varchar(10);
