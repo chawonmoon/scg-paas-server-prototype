@@ -84,7 +84,7 @@ const queryInfo = {
         'UPDATE scg_info set sort_index = sort_index + 2 where sort_index >= ?',
     searchInfo: 'SELECT * FROM scg_info order by sort_index asc',
     findBlockRelation:
-        'SELECT b1.id, b1.name FROM scg_block_relation r1 inner join scg_block b1 on r1.block_child_id = b1.id where r1.block_id = ?'
+        'SELECT b1.id, b1.name, b1.api_version FROM scg_block_relation r1 inner join scg_block b1 on r1.block_child_id = b1.id where r1.block_id = ?'
 };
 
 // common insert
