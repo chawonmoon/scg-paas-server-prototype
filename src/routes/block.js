@@ -74,7 +74,6 @@ router.post('/', function(req, res, next) {
     dbObject.status = bodyInfo.status;
     dbObject.file_id = bodyInfo.file_id;
     dbObject.random_id = bodyInfo.random_id;
-    dbObject.block_relation_ids = bodyInfo.block_relation_ids;
     dbService
         .insert('scg_block', dbObject)
         .then(results => {
