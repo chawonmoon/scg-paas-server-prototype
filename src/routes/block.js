@@ -53,13 +53,27 @@ router.get('/:id', function(req, res, next) {
     dbService
         .selectOne('scg_block', 'id', req.params.id)
         .then(result => {
+            let promiseList = [];
             console.log('result : ' + JSON.stringify(result));
-            dbService
-                .selectQueryById('findBlockRelation', [req.params.id])
-                .then(relationList => {
-                    result.blockRelations = relationList;
-                    res.send(result);
-                });
+            if (result.random_id) {
+                promiseList.push(
+                    dbService
+                        .selectOne('scg_random', 'id', result.random_id)
+                        .then(randomInfo => {
+                            result.randomInfo = randomInfo;
+                        })
+                );
+            }
+            promiseList.push(
+                dbService
+                    .selectQueryById('findBlockRelation', [req.params.id])
+                    .then(relationList => {
+                        result.blockRelations = relationList;
+                    })
+            );
+            Promise.all(promiseList).then(() => {
+                res.send(result);
+            });
         })
         .catch(errorRouteHandler(next));
 });
