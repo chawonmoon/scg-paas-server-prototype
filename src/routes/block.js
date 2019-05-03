@@ -63,6 +63,8 @@ router.get('/:id', function(req, res, next) {
                             result.randomInfo = randomInfo;
                         })
                 );
+            } else {
+                result.randomInfo = {};
             }
             promiseList.push(
                 dbService
