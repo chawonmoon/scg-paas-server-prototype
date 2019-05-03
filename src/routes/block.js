@@ -68,14 +68,13 @@ router.get('/:id', function(req, res, next) {
 router.post('/', function(req, res, next) {
     let bodyInfo = req.body;
     let dbObject = {};
-    // name, description, api_version, status, file_id, random_id, block_relation_ids: []
     dbObject.name = bodyInfo.name;
     dbObject.description = bodyInfo.description;
     dbObject.api_version = bodyInfo.api_version;
     dbObject.status = bodyInfo.status;
     dbObject.file_id = bodyInfo.file_id;
     dbObject.random_id = bodyInfo.random_id;
-    // dbObject.block_relation_ids = bodyInfo.block_relation_ids;
+    dbObject.block_relation_ids = bodyInfo.block_relation_ids;
     dbService
         .insert('scg_block', dbObject)
         .then(results => {
