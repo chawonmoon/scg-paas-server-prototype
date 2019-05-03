@@ -61,6 +61,8 @@ router.post('/', function(req, res, next) {
     dbObject.content = bodyInfo.content;
     dbObject.start_date = bodyInfo.start_date;
     dbObject.end_date = bodyInfo.end_date;
+    dbObject.last_modified_date =
+        bodyInfo.last_modified_date || moment().format('YYYY-MM-DD HH:mm:ss');
     dbService
         .insert('scg_check', dbObject)
         .then(() => {
@@ -76,7 +78,9 @@ router.put('/:id', function(req, res, next) {
     dbObject.content = bodyInfo.content;
     dbObject.start_date = bodyInfo.start_date;
     dbObject.end_date = bodyInfo.end_date;
-    dbObject.last_modified_date = moment().format('YYYY-MM-DD HH:mm:ss');
+    dbObject.last_modified_date =
+        bodyInfo.last_modified_date || moment().format('YYYY-MM-DD HH:mm:ss');
+    // dbObject.last_modified_date = moment().format('YYYY-MM-DD HH:mm:ss');
     dbService
         .update('scg_check', dbObject, 'id', req.params.id)
         .then(() => {
