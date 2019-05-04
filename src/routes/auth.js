@@ -67,7 +67,7 @@ router.get('/loginUserInfo', authMiddleware, function(req, res) {
         );
         res.send({ loginInfo: loginUser });
     } catch (err) {
-        throw new AppError('인증정보가 존재하지 않습니다', [err], 403);
+        throw new AppError('인증정보가 존재하지 않습니다', [err], 401);
     }
 });
 
