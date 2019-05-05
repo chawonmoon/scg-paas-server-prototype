@@ -113,6 +113,11 @@ router.get('/:id/items', function(req, res, next) {
         ])
         .then(result => {
             console.log('result : ' + JSON.stringify(result));
+            result.forEach(info => {
+                if (info.item_list) {
+                    info.item_list = JSON.parse(info.item_list);
+                }
+            });
             res.send(result);
         })
         .catch(errorRouteHandler(next));
