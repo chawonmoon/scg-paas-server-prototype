@@ -66,14 +66,21 @@ router.post('/', function(req, res, next) {
     let dbObject = {};
     dbObject.title = bodyInfo.title;
     dbObject.content = bodyInfo.content;
-    dbObject.sort_index = bodyInfo.sort_index;
     dbObject.status = bodyInfo.status;
     dbObject.file_id = bodyInfo.file_id;
     dbObject.color = bodyInfo.color;
     dbService
-        .insert('scg_info', dbObject)
-        .then(() => {
-            res.send({ success: true });
+        .selectQueryById('getInfoMaxSortIndex', null)
+        .then(result => {
+            const maxSortIndex = result[0].maxSortIndex;
+            if (bodyInfo.sort_index) {
+                dbObject.sort_index = bodyInfo.sort_index;
+            } else {
+                dbObject.sort_index = maxSortIndex;
+            }
+            dbService.insert('scg_info', dbObject).then(() => {
+                res.send({ success: true });
+            });
         })
         .catch(errorRouteHandler(next));
 });
@@ -84,7 +91,9 @@ router.put('/:id', function(req, res, next) {
     let dbObject = {};
     dbObject.title = bodyInfo.title;
     dbObject.content = bodyInfo.content;
-    dbObject.sort_index = bodyInfo.sort_index;
+    if (bodyInfo.sort_index) {
+        dbObject.sort_index = bodyInfo.sort_index;
+    }
     dbObject.status = bodyInfo.status;
     dbObject.file_id = bodyInfo.file_id;
     dbObject.color = bodyInfo.color;
