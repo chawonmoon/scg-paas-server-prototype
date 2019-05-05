@@ -124,6 +124,9 @@ router.get('/:id/items/:itemId', function(req, res, next) {
         .selectOne('scg_random_item', 'id', req.params.itemId)
         .then(result => {
             console.log('result : ' + JSON.stringify(result));
+            if (result.item_list) {
+                result.item_list = JSON.parse(result.item_list);
+            }
             res.send(result);
         })
         .catch(errorRouteHandler(next));
@@ -134,7 +137,9 @@ router.post('/:id/items', function(req, res, next) {
     let bodyInfo = req.body;
     // name, item_list, random_id
     let dbObject = {};
-    dbObject.item_list = bodyInfo.item_list;
+    if (bodyInfo.item_list && bodyInfo.item_list.length) {
+        dbObject.item_list = JSON.stringify(bodyInfo.item_list);
+    }
     dbObject.name = bodyInfo.name;
     dbObject.random_id = bodyInfo.random_id;
     dbService
@@ -149,7 +154,9 @@ router.post('/:id/items', function(req, res, next) {
 router.put('/:id/items/:itemId', function(req, res, next) {
     let bodyInfo = req.body;
     let dbObject = {};
-    dbObject.item_list = bodyInfo.item_list;
+    if (bodyInfo.item_list && bodyInfo.item_list.length) {
+        dbObject.item_list = JSON.stringify(bodyInfo.item_list);
+    }
     dbObject.name = bodyInfo.name;
     dbObject.random_id = bodyInfo.random_id;
     dbObject.last_modified_date = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -162,7 +169,7 @@ router.put('/:id/items/:itemId', function(req, res, next) {
 });
 
 // 랜덤메시지 한건 삭제
-router.delete('/:id/items/:itemId', function (req, res, next) {
+router.delete('/:id/items/:itemId', function(req, res, next) {
     dbService
         .delete('scg_random_item', 'id', req.params.itemId)
         .then(() => {
