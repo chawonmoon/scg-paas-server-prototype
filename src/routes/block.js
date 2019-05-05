@@ -64,7 +64,7 @@ router.get('/:id', function(req, res, next) {
                         })
                 );
             } else {
-                result.randomInfo = {};
+                result.randomInfo = null;
             }
             promiseList.push(
                 dbService
