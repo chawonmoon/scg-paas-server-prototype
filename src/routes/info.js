@@ -76,7 +76,7 @@ router.post('/', function(req, res, next) {
             if (bodyInfo.sort_index) {
                 dbObject.sort_index = bodyInfo.sort_index;
             } else {
-                dbObject.sort_index = maxSortIndex;
+                dbObject.sort_index = maxSortIndex + 1;
             }
             dbService.insert('scg_info', dbObject).then(() => {
                 res.send({ success: true });
