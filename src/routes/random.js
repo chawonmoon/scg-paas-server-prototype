@@ -146,7 +146,7 @@ router.post('/:id/items', function(req, res, next) {
         dbObject.item_list = JSON.stringify(bodyInfo.item_list);
     }
     dbObject.name = bodyInfo.name;
-    dbObject.random_id = bodyInfo.random_id;
+    dbObject.random_id = req.params.id;
     dbService
         .insert('scg_random_item', dbObject)
         .then(() => {
@@ -163,7 +163,7 @@ router.put('/:id/items/:itemId', function(req, res, next) {
         dbObject.item_list = JSON.stringify(bodyInfo.item_list);
     }
     dbObject.name = bodyInfo.name;
-    dbObject.random_id = bodyInfo.random_id;
+    dbObject.random_id = req.params.id;
     dbObject.last_modified_date = moment().format('YYYY-MM-DD HH:mm:ss');
     dbService
         .update('scg_random_item', dbObject, 'id', req.params.itemId)
