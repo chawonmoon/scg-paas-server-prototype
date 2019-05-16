@@ -222,8 +222,11 @@ router.post('/uploadImageAjaxForm', upload.single('imageFile'), function(
     );
     uploadFileInfo.fileUrl =
         Config.fileDownloadPrefixUri + uploadFileInfo.fileFullName;
-    uploadFileInfo.name = body.name;
-    res.send(uploadFileInfo);
+    let result = {};
+    result.name = body.name;
+    result.fileName = file.originalname;
+    result.fileType = file.mimetype;
+    res.send(result);
 });
 
 // 파일 업로드
