@@ -204,6 +204,7 @@ router.post('/uploadImageAjaxForm', upload.single('imageFile'), function(
     res
 ) {
     let file = req.file;
+    let body = req.body;
     let uploadFileInfo = {};
     uploadFileInfo.status = 'upload';
     uploadFileInfo.fileName = file.originalname;
@@ -221,7 +222,7 @@ router.post('/uploadImageAjaxForm', upload.single('imageFile'), function(
     );
     uploadFileInfo.fileUrl =
         Config.fileDownloadPrefixUri + uploadFileInfo.fileFullName;
-    // uploadFileInfo.name =
+    uploadFileInfo.name = body.name;
     res.send(uploadFileInfo);
 });
 
