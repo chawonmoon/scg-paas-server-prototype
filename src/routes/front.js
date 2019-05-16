@@ -226,6 +226,7 @@ router.post('/uploadImageAjaxForm', upload.single('imageFile'), function(
     result.name = body.name;
     result.fileName = file.originalname;
     result.fileType = file.mimetype;
+    result.fileUrl = Config.fileDownloadPrefixUri + uploadFileInfo.fileFullName;
     res.send(result);
 });
 
