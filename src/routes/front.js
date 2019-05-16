@@ -258,4 +258,12 @@ router.post('/uploadImageCkEditor', upload.single('imageFile'), function(
     res.send(uploadFileInfo);
 });
 
+router.post('/ciauth', function(req, res) {
+    res.redirect('http://app-dev.wunderflo.com/web/dummy/ciauth.html');
+});
+
+router.post('/payinfo', function(req, res) {
+    res.redirect('http://app-dev.wunderflo.com/web/dummy/payinfo.html');
+});
+
 module.exports = router;
