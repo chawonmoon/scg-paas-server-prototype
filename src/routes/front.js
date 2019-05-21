@@ -14,6 +14,7 @@ const upload = multer({ dest: Config.fileUploadPath });
 const fs = require('fs');
 const path = require('path');
 const data = require('../utils/data');
+const excelUtil = require('../utils/excel');
 
 // /api/front/mapClusterData : daum map cluster 예제 데이터
 router.get('/mapClusterData', function(req, res) {
@@ -264,6 +265,27 @@ router.post('/ciauth', function(req, res) {
 
 router.post('/payinfo', function(req, res) {
     res.redirect('http://app-dev.wunderflo.com/web/dummy/payinfo.html');
+});
+
+router.get('/publishInfo', function(req, res) {
+    const excelFilePath = 'docs/export.xlsx';
+    let startRowNumber = 3;
+    let startColumnAlphabet = 'C';
+    let excelKeyInfo = {
+        C: 'title',
+        D: 'fileName',
+        E: 'url',
+        F: 'pageCount'
+    };
+    let jsonColumInfoString = '';
+    let result = excelUtil.convertExcelFileToArray(
+        excelFilePath,
+        startRowNumber,
+        startColumnAlphabet,
+        jsonColumInfoString,
+        excelKeyInfo
+    );
+    res.send(result);
 });
 
 module.exports = router;
