@@ -15,6 +15,7 @@ const fs = require('fs');
 const path = require('path');
 const data = require('../utils/data');
 const excelUtil = require('../utils/excel');
+const handlebars = require('handlebars');
 
 // /api/front/mapClusterData : daum map cluster 예제 데이터
 router.get('/mapClusterData', function(req, res) {
@@ -287,6 +288,136 @@ router.get('/publishInfo', function(req, res) {
         excelKeyInfo
     );
     res.send(result);
+});
+
+router.get('/publishInfoToFileName', function(req, res) {
+    const excelFilePath = 'docs/export.xlsx';
+    let startRowNumber = 3;
+    let startColumnAlphabet = 'C';
+    let excelKeyInfo = {
+        C: 'title',
+        D: 'fileName',
+        E: 'url',
+        F: 'pageCount',
+        G: 'success'
+    };
+    let jsonColumInfoString = '';
+    let result = excelUtil.convertExcelFileToArray(
+        excelFilePath,
+        startRowNumber,
+        startColumnAlphabet,
+        jsonColumInfoString,
+        excelKeyInfo
+    );
+    let titleArray = [];
+    let resultString = '';
+    _.forEach(result, info => {
+        if (info.fileName) {
+            titleArray.push(info.fileName);
+            resultString =
+                resultString +
+                ' import ' +
+                info.fileName.substr(0, info.fileName.indexOf('.')) +
+                ' from \'../components/' +
+                info.fileName +
+                '\';' +
+                '\n';
+        }
+    });
+    res.send(resultString);
+});
+
+router.get('/publishInfoToRoute', function(req, res) {
+    const excelFilePath = 'docs/export.xlsx';
+    let startRowNumber = 3;
+    let startColumnAlphabet = 'C';
+    let excelKeyInfo = {
+        C: 'title',
+        D: 'fileName',
+        E: 'url',
+        F: 'pageCount',
+        G: 'success'
+    };
+    let jsonColumInfoString = '';
+    let result = excelUtil.convertExcelFileToArray(
+        excelFilePath,
+        startRowNumber,
+        startColumnAlphabet,
+        jsonColumInfoString,
+        excelKeyInfo
+    );
+    let titleArray = [];
+    let resultString = '';
+    _.forEach(result, info => {
+        if (info.fileName) {
+            titleArray.push(info.fileName);
+            // <Route exact path="/walkthrough1" component={PWalkthrough1} />
+            resultString =
+                resultString +
+                '<Route exact path="' +
+                info.url +
+                '" component={' +
+                info.fileName.substr(0, info.fileName.indexOf('.')) +
+                '} />';
+        }
+    });
+
+    res.send(resultString);
+});
+
+router.get('/publishInfoFileNameArray', function(req, res) {
+    const excelFilePath = 'docs/export.xlsx';
+    let startRowNumber = 3;
+    let startColumnAlphabet = 'C';
+    let excelKeyInfo = {
+        C: 'title',
+        D: 'fileName',
+        E: 'url',
+        F: 'pageCount',
+        G: 'success'
+    };
+    let jsonColumInfoString = '';
+    let result = excelUtil.convertExcelFileToArray(
+        excelFilePath,
+        startRowNumber,
+        startColumnAlphabet,
+        jsonColumInfoString,
+        excelKeyInfo
+    );
+    let titleArray = [];
+    _.forEach(result, info => {
+        if (info.fileName) {
+            titleArray.push(info.fileName);
+        }
+    });
+    res.send(titleArray);
+});
+
+router.get('/createFile', function(req, res) {
+    const templateFileName = path.resolve(__dirname, 'react.template');
+    data.fileList.forEach(fileName => {
+        fs.readFile(templateFileName, function(err, data) {
+            if (!err) {
+                let source = data.toString();
+                let template = handlebars.compile(source);
+                let resultString = template({
+                    className: fileName.substr(0, fileName.indexOf('.'))
+                });
+                try {
+                    let createFileName = path.resolve(
+                        __dirname,
+                        '../newfile/' + fileName
+                    );
+                    fs.writeFileSync(createFileName, resultString);
+                } catch (err) {
+                    console.error(err);
+                }
+            } else {
+                console.error(err);
+            }
+        });
+    });
+    res.send(null);
 });
 
 module.exports = router;

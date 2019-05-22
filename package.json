@@ -24,6 +24,7 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "handlebars": "^4.1.2",
     "jsonwebtoken": "^8.5.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
