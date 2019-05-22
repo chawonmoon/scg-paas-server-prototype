@@ -275,7 +275,8 @@ router.get('/publishInfo', function(req, res) {
         C: 'title',
         D: 'fileName',
         E: 'url',
-        F: 'pageCount'
+        F: 'pageCount',
+        G: 'success'
     };
     let jsonColumInfoString = '';
     let result = excelUtil.convertExcelFileToArray(
