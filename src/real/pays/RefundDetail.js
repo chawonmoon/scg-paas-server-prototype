@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 /*
 
-    이름 : 과오납 환출 신청 내역
+    이름 : 과오납 환불 신청 내역
 
     server api
      -
@@ -20,18 +20,18 @@ import { withRouter } from 'react-router-dom';
 @inject('uiStore')
 @observer
 class RefundDetail extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
 
-  componentDidMount() {
-    this.props.uiStore.changeHeadTitle('과오납 환출 신청 내역');
-  }
+    componentDidMount() {
+        this.props.uiStore.changeHeadTitle('과오납 환불 신청 내역');
+    }
 
-  render() {
-    return <div>RefundDetail</div>;
-  }
+    render() {
+        return <div>RefundDetail</div>;
+    }
 }
 
 export default RefundDetail;
