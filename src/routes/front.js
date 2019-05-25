@@ -16,6 +16,7 @@ const path = require('path');
 const data = require('../utils/data');
 const excelUtil = require('../utils/excel');
 const handlebars = require('handlebars');
+const mkdirp = require('mkdirp');
 
 // /api/front/mapClusterData : daum map cluster 예제 데이터
 router.get('/mapClusterData', function(req, res) {
@@ -290,6 +291,7 @@ router.get('/publishInfo', function(req, res) {
     res.send(result);
 });
 
+// react 상단 import 문자열 추출(퍼블리싱)
 router.get('/publishInfoToFileName', function(req, res) {
     const excelFilePath = 'docs/export.xlsx';
     let startRowNumber = 3;
@@ -416,6 +418,166 @@ router.get('/createFile', function(req, res) {
                 console.error(err);
             }
         });
+    });
+    res.send(null);
+});
+
+// react 상단 import 문자열 추출(운영)
+router.get('/publishInfoToFileName2', function(req, res) {
+    const excelFilePath = 'docs/pass_react_import.xlsx';
+    let startRowNumber = 3;
+    let startColumnAlphabet = 'B';
+    let excelKeyInfo = {
+        B: 'fileName'
+    };
+    let jsonColumInfoString = '';
+    let result = excelUtil.convertExcelFileToArray(
+        excelFilePath,
+        startRowNumber,
+        startColumnAlphabet,
+        jsonColumInfoString,
+        excelKeyInfo
+    );
+    let titleArray = [];
+    let resultString = '';
+    _.forEach(result, info => {
+        if (info.fileName) {
+            titleArray.push(info.fileName);
+            let componentName = '';
+            let filePath = info.fileName.substr(0, info.fileName.indexOf('.'));
+            if (info.fileName.indexOf('/')) {
+                componentName = info.fileName.substring(
+                    info.fileName.indexOf('/') + 1,
+                    info.fileName.indexOf('.')
+                );
+            } else {
+                componentName = info.fileName.substr(
+                    0,
+                    info.fileName.indexOf('.')
+                );
+            }
+            resultString =
+                resultString +
+                ' import ' +
+                componentName +
+                ' from \'../' +
+                filePath +
+                '\';' +
+                '\n';
+        }
+    });
+    res.send(resultString);
+});
+
+// react <Route 정보 추출
+router.get('/publishInfoToRoute2', function(req, res) {
+    const excelFilePath = 'docs/pass_react_route.xlsx';
+    let startRowNumber = 3;
+    let startColumnAlphabet = 'B';
+    let excelKeyInfo = {
+        B: 'componentName',
+        C: 'url'
+    };
+    let jsonColumInfoString = '';
+    let result = excelUtil.convertExcelFileToArray(
+        excelFilePath,
+        startRowNumber,
+        startColumnAlphabet,
+        jsonColumInfoString,
+        excelKeyInfo
+    );
+    let resultString = '';
+    _.forEach(result, info => {
+        if (info.componentName) {
+            // <Route exact path="/walkthrough1" component={PWalkthrough1} />
+            resultString =
+                resultString +
+                '<Route exact path="' +
+                info.url +
+                '" component={' +
+                info.componentName +
+                '} />';
+        }
+    });
+
+    res.send(resultString);
+});
+
+// file 생성
+router.get('/createFile2', function(req, res) {
+    const excelFilePath = 'docs/pass_react_file.xlsx';
+    let startRowNumber = 3;
+    let startColumnAlphabet = 'B';
+    let excelKeyInfo = {
+        B: 'fileName',
+        C: 'url',
+        D: 'title'
+    };
+    let jsonColumInfoString = '';
+    let result = excelUtil.convertExcelFileToArray(
+        excelFilePath,
+        startRowNumber,
+        startColumnAlphabet,
+        jsonColumInfoString,
+        excelKeyInfo
+    );
+    const templateFileName = path.resolve(__dirname, 'react_real.template');
+    fs.readFile(templateFileName, function(err, data) {
+        if (!err) {
+            let source = data.toString();
+            let template = handlebars.compile(source);
+            _.forEach(result, info => {
+                if (info.fileName) {
+                    // className, url, title
+                    let className = '';
+                    if (info.fileName.indexOf('/')) {
+                        className = info.fileName.substring(
+                            info.fileName.indexOf('/') + 1,
+                            info.fileName.indexOf('.')
+                        );
+                    } else {
+                        className = info.fileName.substr(
+                            0,
+                            info.fileName.indexOf('.')
+                        );
+                    }
+                    let resultString = template({
+                        className: className,
+                        title: info.title,
+                        url: info.url
+                    });
+                    try {
+                        let createFileName = path.resolve(
+                            __dirname,
+                            '../real/' + info.fileName
+                        );
+                        console.log('createFileName : ' + createFileName);
+                        console.log(
+                            'createFileName folder path: ' +
+                                createFileName.substr(
+                                    0,
+                                    createFileName.lastIndexOf(path.sep)
+                                )
+                        );
+                        let folderPath = createFileName.substr(
+                            0,
+                            createFileName.lastIndexOf(path.sep)
+                        );
+                        mkdirp(folderPath, function(err) {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                fs.writeFileSync(createFileName, resultString);
+                            }
+                        });
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+            });
+        } else {
+            console.error(err);
+        }
     });
     res.send(null);
 });
