@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <title>테스트</title>
+    <script>
+     
+     /*
+
+        homepage로 연동하기
+
+        goAppPage 함수를 통해서 새로운 윈도우로 테스트 페이지 오픈
+
+        header 정보
+
+        Api.defaults.headers.common['X-MEMBER'] = '3586';
+        Api.defaults.headers.common['X-TOKEN'] = 'c4b324e4709359099256444a8d5ec3db';
+        Api.defaults.headers.common['X-PLATFORM'] = 'ANDROID';
+        Api.defaults.headers.common['X-VERSION'] = '10.4.12';
+
+      */
+
+      var platform = 'ANDROID';
+      var version = '10.4.12';
+      var memberNo = '3586';
+      var memberToken = 'c4b324e4709359099256444a8d5ec3db';
+      var loginInfo = {'X-PLATFORM' : platform, 'X-VERSION' : version};
+      var PUBLIC_URL = '/web';
+
+      function goAppPage(userCase) {
+        localStorage.removeItem('loginInfo');
+        localStorage.removeItem('companyCode');
+        if(userCase === '1') {
+          // 순수 비회원 테스트 go
+          loginInfo.profile = null;
+        } else if(userCase === '2') {
+          // 비회원이면서 체험도시가스를 선택한 회원 테스트 go
+          loginInfo.profile = null;
+          localStorage.setItem('companyCode', '1');
+        } else if(userCase === '3') {
+          // 신규 가입자 중 본인인증을 하고 체험도시가스를 선택하지 않은 회원 테스트 go
+          loginInfo.profile = {member: memberNo, token: memberToken, isAuthCheck: true, isOldMember: false};
+        } else if(userCase === '4') {
+          // 신규 가입자 중 본인인증을 하고 체험도시가스를 선택한 회원 테스트 go
+          loginInfo.profile = {member: memberNo, token: memberToken, isAuthCheck: true, isOldMember: false};
+          localStorage.setItem('companyCode', '1');
+        } else if(userCase === '5') {
+          // 신규 가입자 중 본인인증을 하고 계약번호를 등록한 회원 테스트 go
+          loginInfo.profile = {member: memberNo, token: memberToken, isAuthCheck: true, isOldMember: false, contractNumbers: []};
+        } else if(userCase === '6') {
+          // 기존가입자가 약관동의을 하지 않고 가스락 전용 회원 테스트 go
+          loginInfo.profile = null;
+          localStorage.setItem('companyCode', '1');
+        } else if(userCase === '7') {
+          // 기존가입자가 약관동의을 하지 않고 계약번호만 등록된 회원 테스트 go
+          loginInfo.profile = null;
+          localStorage.setItem('companyCode', '1');
+        } else if(userCase === '8') {
+          // 기존가입자가 약관동의을 하지 않고 가스락 회원이면서 계약번호도 등록한 회원 테스트 go
+          loginInfo.profile = null;
+          localStorage.setItem('companyCode', '1');
+        } else if(userCase === '9') {
+          // 기존가입자가 약관동의을 하고 본인인증을 한 사용자이고 계약번호가 등록되지않은 회원 테스트 go
+          loginInfo.profile = null;
+          localStorage.setItem('companyCode', '1');
+        } else if(userCase === '10') {
+          // 기존가입자가 약관동의을 하고 본인인증을 하지 않고 계약번호만 등록한 회원 테스트 go
+          loginInfo.profile = null;
+          localStorage.setItem('companyCode', '1');
+        } else if(userCase === '11') {
+          // 기존가입자가 약관동의을 하고 가스락 회원이면서 계약번호도 등록한 회원 테스트 go
+          loginInfo.profile = null;
+          localStorage.setItem('companyCode', '1');
+        } else if(userCase === '12') {
+          // 멀티 계약번호를 등록한 회원 테스트 go
+          loginInfo.profile = null;
+          localStorage.setItem('companyCode', '1');
+        }
+        localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+        window.open(PUBLIC_URL);
+      }
+
+      function goAppPageByInputValue() {
+        /* 
+        
+          추가적으로 반영해야 되는 사항들
+           1.본인인증 여부
+           2.정회원 여부 : isRegular ---> 기본적으로 하나의 회사 / 하나의 사용계약번호로 셋팅해서 넘김
+           3.사용계약번호 멀티 여부 : isMultipleContractNumber ---> 기본적으로 하나의 회사 / 2개의 사용계약번호로 셋팅해서 넘김
+          
+        */
+        var member = document.testForm.member.value;
+        var token = document.testForm.token.value;
+        var isOldMember = document.testForm.isOldMember.checked;
+        if(member && token) {
+          loginInfo.profile = {member: memberNo, token: memberToken, isAuthCheck: true, isOldMember: isOldMember};
+          localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+          window.open(PUBLIC_URL);
+        } else {
+          alert('입력값을 확인하세요');
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+    <p onclick="goAppPage('1')">
+      case1 : 순수 비회원 테스트 go
+    </p>
+    <p onclick="goAppPage('2')">
+      case2 : 비회원이면서 체험도시가스를 선택한 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('3')">
+      case3 : 신규 가입자 중 본인인증을 하고 체험도시가스를 선택하지 않은 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('4')">
+      case4 : 신규 가입자 중 본인인증을 하고 체험도시가스를 선택한 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('5')">
+      case5 : 신규 가입자 중 본인인증을 하고 계약번호를 등록한 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('6')">
+      case6 : 기존가입자가 약관동의을 하지 않고 가스락 전용 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('7')">
+      case7 : 기존가입자가 약관동의을 하지 않고 계약번호만 등록된 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('8')">
+      case8 : 기존가입자가 약관동의을 하지 않고 가스락 회원이면서 계약번호도 등록한 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('9')">
+      case9 : 기존가입자가 약관동의을 하고 본인인증을 한 사용자이고 계약번호가 등록되지않은 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('10')">
+      case10 : 기존가입자가 약관동의을 하고 본인인증을 하지 않고 계약번호만 등록한 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('11')">
+      case11 : 기존가입자가 약관동의을 하고 가스락 회원이면서 계약번호도 등록한 회원 테스트 go
+    </p>
+    <p onclick="goAppPage('12')">
+      case12 : 멀티 계약번호를 등록한 회원 테스트 go
+    </p>
+    <p>
+      <form name="testForm">
+        사용자 ID : <input type="text" name="member" /> <br/>
+        토큰 : <input type="text" name="token" /> <br/>
+        기존사용자 여부 : <input type="checkbox" name="isOldMember"/> <br/>
+      <button type="button" onclick="goAppPageByInputValue()">입력한 정보로 테스트 GO</button>
+    </form>
+    </p>
+  </body>
+</html>
