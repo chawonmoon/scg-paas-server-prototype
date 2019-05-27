@@ -4,12 +4,12 @@ import { withRouter } from 'react-router-dom';
 
 /*
 
-    이름 : 과오납 환불 신청 내역
+    이름 : 고객의 소리 수정
 
     server api
      -
 
-    Route Url : /refunds/:id
+    Route Url : /vocs/:id/edit
 
     this.prorps 정보
      -
@@ -19,19 +19,19 @@ import { withRouter } from 'react-router-dom';
 @withRouter
 @inject('uiStore')
 @observer
-class RefundDetail extends React.Component {
+class VocEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   componentDidMount() {
-    this.props.uiStore.changeHeadTitle('과오납 환불 신청 내역');
+    this.props.uiStore.changeHeadTitle('고객의 소리 수정');
   }
 
   render() {
-    return <div>RefundDetail</div>;
+    return <div>VocEdit</div>;
   }
 }
 
-export default RefundDetail;
+export default VocEdit;

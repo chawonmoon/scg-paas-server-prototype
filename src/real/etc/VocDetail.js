@@ -10,7 +10,6 @@ import { withRouter } from 'react-router-dom';
      -
 
     Route Url : /vocs/:id
-/vocs/:id/edit
 
     this.prorps 정보
      -
