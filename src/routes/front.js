@@ -511,7 +511,8 @@ router.get('/createFile2', function(req, res) {
     let excelKeyInfo = {
         B: 'fileName',
         C: 'url',
-        D: 'title'
+        D: 'title',
+        E: 'serverApi'
     };
     let jsonColumInfoString = '';
     let result = excelUtil.convertExcelFileToArray(
@@ -541,10 +542,15 @@ router.get('/createFile2', function(req, res) {
                             info.fileName.indexOf('.')
                         );
                     }
+                    let apis = [];
+                    if (info.serverApi) {
+                        apis = info.serverApi.split('\r\n');
+                    }
                     let resultString = template({
                         className: className,
                         title: info.title,
-                        url: info.url
+                        url: info.url,
+                        apis: apis
                     });
                     try {
                         let createFileName = path.resolve(

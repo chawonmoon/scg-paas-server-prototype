@@ -7,7 +7,11 @@ import { withRouter } from 'react-router-dom';
     이름 : {{title}}
 
     server api
+    {{#each apis}}
+     -{{this}}
+    {{else}}
      -
+    {{/each}}
 
     Route Url : {{url}}
 
