@@ -1,6 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
+import ReactUtil from '../../utils/ReactUtil';
+import FooterMenu from '../layout/FooterMenu';
 
 /*
 
@@ -23,14 +25,38 @@ class Insurance extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.topRef = React.createRef();
+    this.contentRef = React.createRef();
+    this.footerMenuRef = React.createRef();
+    this.setContentHeight = ReactUtil.setContentHeight.bind(this);
   }
 
   componentDidMount() {
     this.props.uiStore.changeHeadTitle('보증보험 정보');
+    this.setContentHeight();
   }
 
   render() {
-    return <div>Insurance</div>;
+    return (
+      <div className="wrap">
+        <div className="topArea" ref={this.topRef}>
+          <div className="inner_box">
+            <div className="title_area">
+              <h1 className="title">보증보험 정보</h1>
+            </div>
+          </div>
+        </div>
+        <div className="contentArea" ref={this.contentRef}>
+          <div className="inner_box">보증보험 정보</div>
+        </div>
+        <div
+          ref={this.footerMenuRef}
+          style={{ display: this.props.displayFooterMenu ? 'block' : 'none' }}
+        >
+          <FooterMenu />
+        </div>
+      </div>
+    );
   }
 }
 

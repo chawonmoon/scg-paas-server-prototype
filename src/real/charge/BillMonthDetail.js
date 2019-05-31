@@ -6,12 +6,12 @@ import FooterMenu from '../layout/FooterMenu';
 
 /*
 
-    이름 : 과오납 조회
+    이름 : 월별조회 전용 상세
 
     server api
      -
 
-    Route Url : /refunds
+    Route Url : /bills/detail?month&#x3D;{201901}
 
     this.prorps 정보
      -
@@ -21,7 +21,7 @@ import FooterMenu from '../layout/FooterMenu';
 @withRouter
 @inject('uiStore')
 @observer
-class Refund extends React.Component {
+class BillMonthDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -32,7 +32,7 @@ class Refund extends React.Component {
   }
 
   componentDidMount() {
-    this.props.uiStore.changeHeadTitle('과오납 조회');
+    this.props.uiStore.changeHeadTitle('월별조회 전용 상세');
     this.setContentHeight();
   }
 
@@ -42,12 +42,12 @@ class Refund extends React.Component {
         <div className="topArea" ref={this.topRef}>
           <div className="inner_box">
             <div className="title_area">
-              <h1 className="title">과오납 조회</h1>
+              <h1 className="title">월별조회 전용 상세</h1>
             </div>
           </div>
         </div>
         <div className="contentArea" ref={this.contentRef}>
-          <div className="inner_box">과오납 조회</div>
+          <div className="inner_box">월별조회 전용 상세</div>
         </div>
         <div
           ref={this.footerMenuRef}
@@ -60,4 +60,4 @@ class Refund extends React.Component {
   }
 }
 
-export default Refund;
+export default BillMonthDetail;

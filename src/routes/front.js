@@ -476,7 +476,8 @@ router.get('/publishInfoToRoute2', function(req, res) {
     let startColumnAlphabet = 'B';
     let excelKeyInfo = {
         B: 'componentName',
-        C: 'url'
+        C: 'url',
+        D: 'footerMenu'
     };
     let jsonColumInfoString = '';
     let result = excelUtil.convertExcelFileToArray(
@@ -490,13 +491,34 @@ router.get('/publishInfoToRoute2', function(req, res) {
     _.forEach(result, info => {
         if (info.componentName) {
             // <Route exact path="/walkthrough1" component={PWalkthrough1} />
+            // resultString =
+            //     resultString +
+            //     '<Route exact path="' +
+            //     info.url +
+            //     '" component={' +
+            //     info.componentName +
+            //     '} />';
+
+            // <Route
+            //     exact
+            //     path="/scorlltest"
+            //     render={props => (
+            //         <PScrollTest {...props} displayFooterMenu={true} />
+            //     )}
+            // />
+            let isFooterMenu = 'false';
+            if (info.footerMenu && info.footerMenu === 'O') {
+                isFooterMenu = 'true';
+            }
             resultString =
                 resultString +
                 '<Route exact path="' +
                 info.url +
-                '" component={' +
+                '" render={props => (<' +
                 info.componentName +
-                '} />';
+                ' {...props} displayFooterMenu={' +
+                isFooterMenu +
+                '} /> )} />';
         }
     });
 
@@ -531,11 +553,13 @@ router.get('/createFile2', function(req, res) {
                 if (info.fileName) {
                     // className, url, title
                     let className = '';
-                    if (info.fileName.indexOf('/')) {
+                    let isParentFolder = false;
+                    if (info.fileName.indexOf('/') !== -1) {
                         className = info.fileName.substring(
                             info.fileName.indexOf('/') + 1,
                             info.fileName.indexOf('.')
                         );
+                        isParentFolder = true;
                     } else {
                         className = info.fileName.substr(
                             0,
@@ -546,12 +570,17 @@ router.get('/createFile2', function(req, res) {
                     if (info.serverApi) {
                         apis = info.serverApi.split('\r\n');
                     }
-                    let resultString = template({
+                    let templateObject = {
                         className: className,
                         title: info.title,
                         url: info.url,
                         apis: apis
-                    });
+                    };
+                    if (isParentFolder) {
+                        templateObject.isParentFolder = isParentFolder;
+                    }
+                    console.log('isParentFolder : ' + isParentFolder);
+                    let resultString = template(templateObject);
                     try {
                         let createFileName = path.resolve(
                             __dirname,
