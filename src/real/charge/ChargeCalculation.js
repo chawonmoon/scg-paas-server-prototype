@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
 import ReactUtil from '../../utils/ReactUtil';
 import FooterMenu from '../layout/FooterMenu';
 
@@ -15,10 +14,12 @@ import FooterMenu from '../layout/FooterMenu';
 
     this.prorps 정보
      -
+    
+    개발방법
+     -store (ChargeStore)
 
 */
 
-@withRouter
 @inject('uiStore')
 @observer
 class ChargeCalculation extends React.Component {

@@ -534,7 +534,8 @@ router.get('/createFile2', function(req, res) {
         B: 'fileName',
         C: 'url',
         D: 'title',
-        E: 'serverApi'
+        E: 'serverApi',
+        F: 'developMethod'
     };
     let jsonColumInfoString = '';
     let result = excelUtil.convertExcelFileToArray(
@@ -574,7 +575,8 @@ router.get('/createFile2', function(req, res) {
                         className: className,
                         title: info.title,
                         url: info.url,
-                        apis: apis
+                        apis: apis,
+                        developMethod: info.developMethod
                     };
                     if (isParentFolder) {
                         templateObject.isParentFolder = isParentFolder;

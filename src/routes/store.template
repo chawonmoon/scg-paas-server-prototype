@@ -1,0 +1,25 @@
+import { observable, action, runInAction } from 'mobx';
+import stores from './stores';
+import Api from '../utils/Api';
+import update from 'immutability-helper';
+
+class {{name}} {
+  @observable title = '';
+
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+  }
+
+  @action
+  load() {
+    this.headTitle = title;
+    Api.get('test').then(response => {
+        runInAction(() => {
+            this.title = response.data;
+        });
+    });
+  }
+
+}
+
+export default {{name}};
