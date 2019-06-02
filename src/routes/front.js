@@ -619,4 +619,8 @@ router.get('/createFile2', function(req, res) {
     res.send(null);
 });
 
+// store file create
+// stores.js 관련 추출
+// RootStore.js 관련 추출
+
 module.exports = router;

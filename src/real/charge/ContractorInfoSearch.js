@@ -16,7 +16,7 @@ import FooterMenu from '../layout/FooterMenu';
      -
     
     개발방법
-     -store (SimpleStore)
+     -store (SimpleBillSearchStore)
 
 */
 
