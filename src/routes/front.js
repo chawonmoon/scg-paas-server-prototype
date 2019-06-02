@@ -619,8 +619,138 @@ router.get('/createFile2', function(req, res) {
     res.send(null);
 });
 
+// stores.js 주석 / 하단 정의, RootStore.js import / constructor 부분
+// type 1, 2, 3, 4
+// type 1 : rootStore : store 간의 통신을 도와주는 최상위 store
+// type 2 : appStore: rootStore.appStore,
+// type 3 : import AppStore from './AppStore';
+// type 4 : this.homeStore = new HomeStore(this);
+router.get('/storeInfo', function(req, res) {
+    const excelFilePath = 'docs/pass_store.xlsx';
+    let startRowNumber = 3;
+    let startColumnAlphabet = 'B';
+    let excelKeyInfo = {
+        B: 'storeName',
+        C: 'description'
+    };
+    let jsonColumInfoString = '';
+    let result = excelUtil.convertExcelFileToArray(
+        excelFilePath,
+        startRowNumber,
+        startColumnAlphabet,
+        jsonColumInfoString,
+        excelKeyInfo
+    );
+    let resultString = '';
+    let type = req.query.type;
+    _.forEach(result, info => {
+        if (info.storeName) {
+            let storeName = info.storeName;
+            let useStoreName =
+                storeName.substr(0, 1).toLocaleLowerCase() +
+                storeName.substr(1);
+            if (type === '1') {
+                // rootStore : store 간의 통신을 도와주는 최상위 store
+                resultString =
+                    resultString +
+                    useStoreName +
+                    ' : ' +
+                    info.description +
+                    '\n';
+            } else if (type === '2') {
+                // appStore: rootStore.appStore
+                resultString =
+                    resultString +
+                    useStoreName +
+                    ': rootStore.' +
+                    useStoreName +
+                    ',\n';
+            } else if (type === '3') {
+                // import AppStore from './AppStore';
+                resultString =
+                    resultString +
+                    'import ' +
+                    storeName +
+                    ' from \'./' +
+                    storeName +
+                    '\';\n';
+            } else if (type === '4') {
+                // this.homeStore = new HomeStore(this);
+                resultString =
+                    resultString +
+                    'this.' +
+                    useStoreName +
+                    ' = new ' +
+                    storeName +
+                    '(this);\n';
+            }
+        }
+    });
+
+    res.send(resultString);
+});
+
 // store file create
-// stores.js 관련 추출
-// RootStore.js 관련 추출
+router.get('/createFileStore', function(req, res) {
+    const excelFilePath = 'docs/pass_store.xlsx';
+    let startRowNumber = 3;
+    let startColumnAlphabet = 'B';
+    let excelKeyInfo = {
+        B: 'name'
+    };
+    let jsonColumInfoString = '';
+    let result = excelUtil.convertExcelFileToArray(
+        excelFilePath,
+        startRowNumber,
+        startColumnAlphabet,
+        jsonColumInfoString,
+        excelKeyInfo
+    );
+    const templateFileName = path.resolve(__dirname, 'store.template');
+    fs.readFile(templateFileName, function(err, data) {
+        if (!err) {
+            let source = data.toString();
+            let template = handlebars.compile(source);
+            _.forEach(result, info => {
+                if (info.name) {
+                    let templateObject = {
+                        name: info.name
+                    };
+                    let resultString = template(templateObject);
+                    try {
+                        let createFileName = path.resolve(
+                            __dirname,
+                            '../stores/' + info.name + '.js'
+                        );
+                        console.log('createFileName : ' + createFileName);
+                        console.log(
+                            'createFileName folder path: ' +
+                                createFileName.substr(
+                                    0,
+                                    createFileName.lastIndexOf(path.sep)
+                                )
+                        );
+                        let folderPath = createFileName.substr(
+                            0,
+                            createFileName.lastIndexOf(path.sep)
+                        );
+                        mkdirp(folderPath, function(err) {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                fs.writeFileSync(createFileName, resultString);
+                            }
+                        });
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+            });
+        } else {
+            console.error(err);
+        }
+    });
+    res.send(null);
+});
 
 module.exports = router;

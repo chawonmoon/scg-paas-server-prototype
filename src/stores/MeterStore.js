@@ -1,7 +1,7 @@
 import { observable, action, runInAction } from 'mobx';
 import Api from '../utils/Api';
 
-class {{name}} {
+class MeterStore {
   @observable title = '';
 
   constructor(rootStore) {
@@ -18,4 +18,4 @@ class {{name}} {
   }
 }
 
-export default {{name}};
+export default MeterStore;
