@@ -1,7 +1,7 @@
 import { observable, action, runInAction } from 'mobx';
 import Api from '../utils/Api';
 
-class BillMonthSearchStore {
+class BillSearchMonthStore {
   @observable title = '';
 
   constructor(rootStore) {
@@ -18,4 +18,4 @@ class BillMonthSearchStore {
   }
 }
 
-export default BillMonthSearchStore;
+export default BillSearchMonthStore;
