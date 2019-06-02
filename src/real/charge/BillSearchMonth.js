@@ -16,11 +16,11 @@ import FooterMenu from '../layout/FooterMenu';
      -
     
     개발방법
-     -store (BillMonthSearchStore, BillSearchStore)
+     -store (BillMonthSearchStore)
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'billMonthSearchStore')
 @observer
 class BillSearchMonth extends React.Component {
   constructor(props) {

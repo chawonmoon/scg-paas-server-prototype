@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'directDebitStore')
 @observer
 class DirectDebit extends React.Component {
   constructor(props) {

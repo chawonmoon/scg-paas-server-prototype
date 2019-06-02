@@ -29,7 +29,11 @@ import FooterMenu from './layout/FooterMenu';
 
 */
 
+{{#if useStoreName }}
+@inject('uiStore', '{{useStoreName}}')
+{{else}}
 @inject('uiStore')
+{{/if}}
 @observer
 class {{className}} extends React.Component {
   constructor(props) {

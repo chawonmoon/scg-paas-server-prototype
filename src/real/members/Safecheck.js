@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'safeCheckStore')
 @observer
 class Safecheck extends React.Component {
   constructor(props) {

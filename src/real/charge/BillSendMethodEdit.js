@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'billSendMethodStore')
 @observer
 class BillSendMethodEdit extends React.Component {
   constructor(props) {

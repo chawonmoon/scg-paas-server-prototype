@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'weakDiscountStore')
 @observer
 class WeakDiscountAdd extends React.Component {
   constructor(props) {

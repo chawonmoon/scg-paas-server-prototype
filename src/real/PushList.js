@@ -20,7 +20,7 @@ import FooterMenu from './layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'pushStore')
 @observer
 class PushList extends React.Component {
   constructor(props) {

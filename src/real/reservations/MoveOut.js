@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'moveStore')
 @observer
 class MoveOut extends React.Component {
   constructor(props) {

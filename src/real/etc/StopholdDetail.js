@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'stopholdStore')
 @observer
 class StopholdDetail extends React.Component {
   constructor(props) {

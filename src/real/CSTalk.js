@@ -20,7 +20,7 @@ import FooterMenu from './layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'cSTalkStore')
 @observer
 class CSTalk extends React.Component {
   constructor(props) {

@@ -21,7 +21,7 @@ import FooterMenu from './layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'homeStore')
 @observer
 class Home extends React.Component {
   constructor(props) {

@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'scheduleStore')
 @observer
 class Schedule extends React.Component {
   constructor(props) {

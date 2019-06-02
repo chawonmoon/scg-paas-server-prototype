@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'contractNumberAddByMyInfoStore')
 @observer
 class ContractNumberAddByMyInfo extends React.Component {
   constructor(props) {

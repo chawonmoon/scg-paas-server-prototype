@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'vocStore')
 @observer
 class VocDetail extends React.Component {
   constructor(props) {

@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'centerAreaStore')
 @observer
 class CenterAreaSearch extends React.Component {
   constructor(props) {

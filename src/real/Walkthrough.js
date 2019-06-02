@@ -20,7 +20,7 @@ import FooterMenu from './layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'walkthroughStore')
 @observer
 class Walkthrough extends React.Component {
   constructor(props) {

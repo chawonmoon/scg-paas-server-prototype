@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'infoStore')
 @observer
 class InfoList extends React.Component {
   constructor(props) {

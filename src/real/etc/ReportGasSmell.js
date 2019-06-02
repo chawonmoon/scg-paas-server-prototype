@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'reportStore')
 @observer
 class ReportGasSmell extends React.Component {
   constructor(props) {

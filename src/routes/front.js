@@ -581,6 +581,16 @@ router.get('/createFile2', function(req, res) {
                     if (isParentFolder) {
                         templateObject.isParentFolder = isParentFolder;
                     }
+                    if (info.developMethod.indexOf('store') !== -1) {
+                        let storeName = info.developMethod.substring(
+                            info.developMethod.indexOf('(') + 1,
+                            info.developMethod.length - 1
+                        );
+                        let useStoreName =
+                            storeName.substr(0, 1).toLocaleLowerCase() +
+                            storeName.substr(1);
+                        templateObject.useStoreName = useStoreName;
+                    }
                     console.log('isParentFolder : ' + isParentFolder);
                     let resultString = template(templateObject);
                     try {

@@ -20,7 +20,7 @@ import FooterMenu from '../layout/FooterMenu';
 
 */
 
-@inject('uiStore')
+@inject('uiStore', 'lifeStore')
 @observer
 class LifeSectionList extends React.Component {
   constructor(props) {
