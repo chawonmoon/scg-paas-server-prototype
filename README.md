@@ -114,3 +114,8 @@ CREATE TABLE `scgpaas`.`scg_user` (
  -sudo setcap 'cap_net_bind_service=+ep' $NODE_PATH
 
  /home/ec2-user/.nvm/versions/node/v10.15.3/bin
+
+
+sudo cat /var/log/mariadb/mariadb.log
+sudo systemctl start mariadb
+sudo systemctl status mariadb
