@@ -27,7 +27,7 @@ router.get('/health', function(req, res) {
             dbAlive = true;
         }
         res.send({
-            version: '1',
+            version: '2',
             serverAlive: true,
             dbAlive: dbAlive
         });
