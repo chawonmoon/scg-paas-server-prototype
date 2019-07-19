@@ -27,6 +27,7 @@ router.get('/health', function(req, res) {
             dbAlive = true;
         }
         res.send({
+            version: '1',
             serverAlive: true,
             dbAlive: dbAlive
         });
@@ -34,21 +35,36 @@ router.get('/health', function(req, res) {
 });
 
 // table 컬럼정보를 json 키값으로 반환 : 기본값 존재시 해당 기본값으로 셋팅
-router.get('/tableInfoToJson1', function (req, res, next) {
-    dbService.selectQueryById('getTableInfoToObjectDefaultValue', [req.query.tableName])
-        .then((result) => {
+router.get('/tableInfoToJson1', function(req, res, next) {
+    dbService
+        .selectQueryById('getTableInfoToObjectDefaultValue', [
+            req.query.tableName
+        ])
+        .then(result => {
             if (result.length > 0) {
                 let tableJsonInfo = {};
-                _.forEach(result, (info) => {
-                    if (info.data_type.indexOf('varchar') != -1 || info.data_type.indexOf('text') != -1) {
-                        if (info.column_default && info.column_default !== 'NULL') {
-                            tableJsonInfo[info.column_name] = info.column_default;
+                _.forEach(result, info => {
+                    if (
+                        info.data_type.indexOf('varchar') != -1 ||
+                        info.data_type.indexOf('text') != -1
+                    ) {
+                        if (
+                            info.column_default &&
+                            info.column_default !== 'NULL'
+                        ) {
+                            tableJsonInfo[info.column_name] =
+                                info.column_default;
                         } else {
                             tableJsonInfo[info.column_name] = '';
                         }
                     } else {
-                        if (info.column_default && info.column_default !== 'NULL') {
-                            tableJsonInfo[info.column_name] = Number(info.column_default);
+                        if (
+                            info.column_default &&
+                            info.column_default !== 'NULL'
+                        ) {
+                            tableJsonInfo[info.column_name] = Number(
+                                info.column_default
+                            );
                         } else {
                             tableJsonInfo[info.column_name] = 0;
                         }
@@ -56,19 +72,28 @@ router.get('/tableInfoToJson1', function (req, res, next) {
                 });
                 res.send(tableJsonInfo);
             } else {
-                return Promise.reject(new AppError('존재하지 않는 테이블 입니다'));
+                return Promise.reject(
+                    new AppError('존재하지 않는 테이블 입니다')
+                );
             }
-        }).catch(errorRouteHandler(next));
+        })
+        .catch(errorRouteHandler(next));
 });
 
 // table 컬럼정보를 json 키값으로 반환
-router.get('/tableInfoToJson2', function (req, res, next) {
-    dbService.selectQueryById('getTableInfoToObjectDefaultValue', [req.query.tableName])
-        .then((result) => {
+router.get('/tableInfoToJson2', function(req, res, next) {
+    dbService
+        .selectQueryById('getTableInfoToObjectDefaultValue', [
+            req.query.tableName
+        ])
+        .then(result => {
             if (result.length > 0) {
                 let tableJsonInfo = {};
-                _.forEach(result, (info) => {
-                    if (info.data_type.indexOf('varchar') != -1 || info.data_type.indexOf('text') != -1) {
+                _.forEach(result, info => {
+                    if (
+                        info.data_type.indexOf('varchar') != -1 ||
+                        info.data_type.indexOf('text') != -1
+                    ) {
                         tableJsonInfo[info.column_name] = '';
                     } else {
                         tableJsonInfo[info.column_name] = 0;
@@ -76,41 +101,50 @@ router.get('/tableInfoToJson2', function (req, res, next) {
                 });
                 res.send(tableJsonInfo);
             } else {
-                return Promise.reject(new AppError('존재하지 않는 테이블 입니다'));
+                return Promise.reject(
+                    new AppError('존재하지 않는 테이블 입니다')
+                );
             }
-        }).catch(errorRouteHandler(next));
+        })
+        .catch(errorRouteHandler(next));
 });
 
 // 전체 table 수정
-router.put('/updateTableAll', function (req, res, next) {
+router.put('/updateTableAll', function(req, res, next) {
     const table = req.body.table;
     const updateInfo = req.body.updateInfo;
-    dbService.updateAll(table, updateInfo)
+    dbService
+        .updateAll(table, updateInfo)
         .then(() => {
             res.send({ success: true });
-        }).catch(errorRouteHandler(next));
+        })
+        .catch(errorRouteHandler(next));
 });
 
 // 테이블 한건 수정
-router.put('/updateTableByColumnInfo', function (req, res, next) {
+router.put('/updateTableByColumnInfo', function(req, res, next) {
     const table = req.body.table;
     const updateInfo = req.body.updateInfo;
     const columnName = req.body.columnName;
     const columnValue = req.body.columnValue;
-    dbService.update(table, updateInfo, columnName, columnValue)
+    dbService
+        .update(table, updateInfo, columnName, columnValue)
         .then(() => {
             res.send({ success: true });
-        }).catch(errorRouteHandler(next));
+        })
+        .catch(errorRouteHandler(next));
 });
 
 // 테이블 insert
-router.post('/insertTable', function (req, res, next) {
+router.post('/insertTable', function(req, res, next) {
     const table = req.body.table;
     const insertInfo = req.body.insertInfo;
-    dbService.insert(table, insertInfo)
+    dbService
+        .insert(table, insertInfo)
         .then(() => {
             res.send({ success: true });
-        }).catch(errorRouteHandler(next));
+        })
+        .catch(errorRouteHandler(next));
 });
 
 // 메모리 체크
